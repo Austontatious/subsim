@@ -82,26 +82,7 @@ func _on_compass_target(deg: float) -> void:
 func _on_engine_ping() -> void:
     if space3d and space3d.has_method("spawn_ping"):
         space3d.spawn_ping()
-func _on_ping_pressed() -> void:
-    engine.cmd_ping()
 
-func _telegraph_text(t: int) -> String:
-    var map := {
-        -5: "REV FULL", -4: "REV 3/4", -3: "REV 1/2", -2: "REV 1/4", -1: "REV 1/8",
-         0: "STOP",
-         1: "AHEAD 1/8", 2: "AHEAD 1/4", 3: "AHEAD 1/2", 4: "AHEAD 3/4", 5: "AHEAD FULL"
-    }
-    return map.get(t, str(t))
-func _on_ping_pressed() -> void:
-    engine.cmd_ping()
-
-func _telegraph_text(t: int) -> String:
-    var map := {
-        -5: "REV FULL", -4: "REV 3/4", -3: "REV 1/2", -2: "REV 1/4", -1: "REV 1/8",
-         0: "STOP",
-         1: "AHEAD 1/8", 2: "AHEAD 1/4", 3: "AHEAD 1/2", 4: "AHEAD 3/4", 5: "AHEAD FULL"
-    }
-    return map.get(t, str(t))
 func _on_ping_pressed() -> void:
     engine.cmd_ping()
 
