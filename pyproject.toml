@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subsim"
+version = "0.1.0"
+description = "Audio-first submarine skirmish prototype."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "SubSim Team"}]
+dependencies = [
+  "pyglet>=2.0.8",
+  "pygame>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+]
+
+[project.scripts]
+subsim = "subsim.__main__:main"
