@@ -4,6 +4,9 @@ extends MeshInstance3D
 @export var step: float = 5.0
 @export var y_level: float = 0.0
 
+var _shader_mat: ShaderMaterial
+var _skew: float = 0.0
+
 func _ready() -> void:
     var im := ImmediateMesh.new()
     im.surface_begin(Mesh.PRIMITIVE_LINES)
@@ -31,10 +34,25 @@ func _ready() -> void:
     im.surface_end()
 
     mesh = im
-    var mat := StandardMaterial3D.new()
-    mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-    mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-    material_override = mat
+    var shader := Shader.new()
+    shader.code = """
+shader_type spatial;
+render_mode unshaded, cull_disabled;
+uniform float skew : hint_range(-10.0, 10.0) = 0.0;
+uniform float half_size = 50.0;
+
+void vertex() {
+    float t = POSITION.z / max(1.0, half_size);
+    // Non-linear pull for a curved look
+    float curv = t * abs(t);
+    POSITION.x += skew * curv;
+}
+"""
+    _shader_mat = ShaderMaterial.new()
+    _shader_mat.shader = shader
+    _shader_mat.set_shader_parameter("half_size", half_size)
+    _shader_mat.set_shader_parameter("skew", _skew)
+    material_override = _shader_mat
 
 func _add_line(im: ImmediateMesh, a: Vector3, b: Vector3, color: Color) -> void:
     im.surface_set_color(color)
@@ -42,3 +60,7 @@ func _add_line(im: ImmediateMesh, a: Vector3, b: Vector3, color: Color) -> void:
     im.surface_set_color(color)
     im.surface_add_vertex(b)
 
+func set_grid_skew(v: float) -> void:
+    _skew = v
+    if _shader_mat:
+        _shader_mat.set_shader_parameter("skew", _skew)

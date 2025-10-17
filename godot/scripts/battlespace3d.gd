@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var cam_pivot: Node3D = $CameraPivot
 @onready var cam: Camera3D = $CameraPivot/Camera3D
+@onready var grid := $Grid
 var contacts_root: Node3D
 
 const WORLD_SCALE := 0.02 # meters to world units
@@ -20,6 +21,13 @@ func update_from_engine(pose: Dictionary) -> void:
     var hdg: float = float(pose.get("heading", 0.0))
     rotation.y = deg_to_rad(hdg)
     # Optionally position camera pivot later based on player position
+    # Apply gridline skew (opposes the turn) based on heading error
+    var tgt: float = float(pose.get("heading_target", hdg))
+    var err: float = fposmod(tgt - hdg + 540.0, 360.0) - 180.0
+    var skew_scale := 4.0 # tune visual strength
+    var skew_val := clamp(err / 45.0, -1.0, 1.0) * skew_scale
+    if grid and grid.has_method("set_grid_skew"):
+        grid.set_grid_skew(-skew_val) # oppose the turn visually
 
 func _unhandled_input(event: InputEvent) -> void:
     if event is InputEventMagnifyGesture:

@@ -9,7 +9,8 @@ signal target_changed(deg: float)
 var dragging: bool = false
 
 func _ready():
-    mouse_filter = Control.MOUSE_FILTER_PASS
+    # Capture touch/mouse events reliably for dragging
+    mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _process(_dt: float) -> void:
     queue_redraw()

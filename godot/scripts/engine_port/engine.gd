@@ -58,11 +58,13 @@ func _ready() -> void:
 
 func _spawn_demo():
     _contacts.clear()
-    var h := Contact.new(); h.id = "H"; h.typ="sub"; h.x=1200; h.y=0; h.heading_deg=200; h.speed_mps=10
-    var m := Contact.new(); m.id = "M"; m.typ="merchant"; m.x=-1800; m.y=800; m.heading_deg=20; m.speed_mps=6
-    _contacts = [h, m]
+    var r := Contact.new(); r.id = "R"; r.typ = "escort"; r.x = 1500; r.y = -400; r.heading_deg = 45; r.speed_mps = 8
+    _contacts = [r]
+    _wander_reset()
 
 var _contacts: Array = []
+var _wander_next_change: float = 0.0
+var _wander_target_hdg: float = 0.0
 
 func step(dt: float) -> void:
     # player kinematics
@@ -88,6 +90,8 @@ func step(dt: float) -> void:
         c.x += cos(cr) * c.speed_mps * dt
         c.y += sin(cr) * c.speed_mps * dt
         c.confidence = clamp(c.confidence + rng.randf_range(-0.02, 0.03), 0.2, 1.0)
+
+    _update_wander(dt)
 
     # sensors
     ping_age += dt
@@ -143,3 +147,24 @@ func get_contacts() -> Array:
 func _angle_diff_deg(target: float, current: float) -> float:
     var a := fposmod(target - current + 540.0, 360.0) - 180.0
     return a
+
+func _wander_reset() -> void:
+    _wander_next_change = rng.randf_range(1.5, 4.0)
+    if _contacts.size() > 0:
+        var c: Contact = _contacts[0]
+        _wander_target_hdg = fposmod(c.heading_deg + rng.randf_range(-90.0, 90.0) + 360.0, 360.0)
+
+func _update_wander(dt: float) -> void:
+    if _contacts.size() == 0:
+        return
+    var c: Contact = _contacts[0]
+    _wander_next_change -= dt
+    if _wander_next_change <= 0.0:
+        _wander_reset()
+        # vary speed a bit 2..12 m/s
+        c.speed_mps = clamp(c.speed_mps + rng.randf_range(-2.0, 2.0), 2.0, 12.0)
+    # smoothly steer toward target heading
+    var dh: float = _angle_diff_deg(_wander_target_hdg, c.heading_deg)
+    var max_turn: float = TURN_RATE_DEGPS * 0.5 * dt
+    var step_h: float = clamp(dh, -max_turn, max_turn)
+    c.heading_deg = fposmod(c.heading_deg + step_h + 360.0, 360.0)
