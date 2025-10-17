@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://main/main.gd" id=1]
 [ext_resource type="Script" path="res://scripts/engine_port/engine.gd" id=2]
 [ext_resource type="Script" path="res://scripts/renderer.gd" id=3]
 [ext_resource type="PackedScene" path="res://space/Battlespace3D.tscn" id=4]
+[ext_resource type="Script" path="res://scripts/ui/compass_dial.gd" id=5]
 
 [node name="Main" type="Node3D"]
 script = ExtResource( 1 )
@@ -37,12 +38,12 @@ offset_left = 20.0
 offset_top = 120.0
 offset_right = 60.0
 offset_bottom = 520.0
-min_value = -3.0
-max_value = 3.0
+min_value = -5.0
+max_value = 5.0
 step = 1.0
 value = 0.0
 ticks_on_borders = true
-tick_count = 7
+tick_count = 11
 
 [node name="HeadingWheel" type="Control" parent="CanvasLayer/HUD"]
 layout_mode = 0
@@ -51,6 +52,14 @@ offset_top = 120.0
 offset_right = 1000.0
 offset_bottom = 520.0
 mouse_filter = 1
+
+[node name="CompassDial" type="Control" parent="CanvasLayer/HUD"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 120.0
+offset_right = 1000.0
+offset_bottom = 520.0
+script = ExtResource( 5 )
 
 [node name="DepthDial" type="Control" parent="CanvasLayer/HUD"]
 layout_mode = 0
