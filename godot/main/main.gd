@@ -4,6 +4,8 @@ extends Node3D
 @onready var hud_label: Label = $CanvasLayer/HUD/Label
 @onready var tele: VSlider = $CanvasLayer/HUD/Telegraph
 @onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
+@onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
+@onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
 @onready var heading_wheel: Control = $CanvasLayer/HUD/HeadingWheel
 @onready var depth_dial: Control = $CanvasLayer/HUD/DepthDial
 @onready var space3d: Node3D = get_node_or_null("Battlespace3D") as Node3D
@@ -45,9 +47,21 @@ func _ready() -> void:
     if ping_btn:
         ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
     _on_tele_changed(tele.value)
+    var ping_btn := get_node_or_null("CanvasLayer/HUD/PingButton")
+    if ping_btn:
+        ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
+    _on_tele_changed(tele.value)
+    var ping_btn := get_node_or_null("CanvasLayer/HUD/PingButton")
+    if ping_btn:
+        ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
+    _on_tele_changed(tele.value)
 
 func _on_tele_changed(v: float) -> void:
     engine.set_telegraph(int(round(v)))
+    if tele_label:
+        tele_label.text = _telegraph_text(int(round(v)))
+    if tele_label:
+        tele_label.text = _telegraph_text(int(round(v)))
     if tele_label:
         tele_label.text = _telegraph_text(int(round(v)))
 
@@ -82,6 +96,26 @@ func _on_compass_target(deg: float) -> void:
 func _on_engine_ping() -> void:
     if space3d and space3d.has_method("spawn_ping"):
         space3d.spawn_ping()
+func _on_ping_pressed() -> void:
+    engine.cmd_ping()
+
+func _telegraph_text(t: int) -> String:
+    var map := {
+        -5: "REV FULL", -4: "REV 3/4", -3: "REV 1/2", -2: "REV 1/4", -1: "REV 1/8",
+         0: "STOP",
+         1: "AHEAD 1/8", 2: "AHEAD 1/4", 3: "AHEAD 1/2", 4: "AHEAD 3/4", 5: "AHEAD FULL"
+    }
+    return map.get(t, str(t))
+func _on_ping_pressed() -> void:
+    engine.cmd_ping()
+
+func _telegraph_text(t: int) -> String:
+    var map := {
+        -5: "REV FULL", -4: "REV 3/4", -3: "REV 1/2", -2: "REV 1/4", -1: "REV 1/8",
+         0: "STOP",
+         1: "AHEAD 1/8", 2: "AHEAD 1/4", 3: "AHEAD 1/2", 4: "AHEAD 3/4", 5: "AHEAD FULL"
+    }
+    return map.get(t, str(t))
 func _on_ping_pressed() -> void:
     engine.cmd_ping()
 
