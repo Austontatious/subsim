@@ -87,16 +87,9 @@ func _on_ping_pressed() -> void:
     engine.cmd_ping()
 
 func _telegraph_text(t: int) -> String:
-    match t:
-        -5: return "REV FULL"
-        -4: return "REV 3/4"
-        -3: return "REV 1/2"
-        -2: return "REV 1/4"
-        -1: return "REV 1/8"
-         0: return "STOP"
-         1: return "AHEAD 1/8"
-         2: return "AHEAD 1/4"
-         3: return "AHEAD 1/2"
-         4: return "AHEAD 3/4"
-         5: return "AHEAD FULL"
-         _ : return str(t)
+    var map := {
+        -5: "REV FULL", -4: "REV 3/4", -3: "REV 1/2", -2: "REV 1/4", -1: "REV 1/8",
+         0: "STOP",
+         1: "AHEAD 1/8", 2: "AHEAD 1/4", 3: "AHEAD 1/2", 4: "AHEAD 3/4", 5: "AHEAD FULL"
+    }
+    return map.get(t, str(t))
