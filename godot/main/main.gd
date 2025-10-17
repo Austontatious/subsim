@@ -3,6 +3,7 @@ extends Node3D
 @onready var engine: SubsimEngine = $Engine as SubsimEngine
 @onready var hud_label: Label = $CanvasLayer/HUD/Label
 @onready var tele: VSlider = $CanvasLayer/HUD/Telegraph
+@onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
 @onready var heading_wheel: Control = $CanvasLayer/HUD/HeadingWheel
 @onready var depth_dial: Control = $CanvasLayer/HUD/DepthDial
 @onready var space3d: Node3D = get_node_or_null("Battlespace3D") as Node3D
@@ -40,9 +41,15 @@ func _ready() -> void:
         compass.connect("target_changed", Callable(self, "_on_compass_target"))
     if engine:
         engine.sfx_ping.connect(_on_engine_ping)
+    var ping_btn := get_node_or_null("CanvasLayer/HUD/PingButton")
+    if ping_btn:
+        ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
+    _on_tele_changed(tele.value)
 
 func _on_tele_changed(v: float) -> void:
     engine.set_telegraph(int(round(v)))
+    if tele_label:
+        tele_label.text = _telegraph_text(int(round(v)))
 
 var wheel_dragging: bool = false
 func _on_wheel_input(event: InputEvent) -> void:
@@ -75,3 +82,20 @@ func _on_compass_target(deg: float) -> void:
 func _on_engine_ping() -> void:
     if space3d and space3d.has_method("spawn_ping"):
         space3d.spawn_ping()
+func _on_ping_pressed() -> void:
+    engine.cmd_ping()
+
+func _telegraph_text(t: int) -> String:
+    match t:
+        -5: return "REV FULL"
+        -4: return "REV 3/4"
+        -3: return "REV 1/2"
+        -2: return "REV 1/4"
+        -1: return "REV 1/8"
+         0: return "STOP"
+         1: return "AHEAD 1/8"
+         2: return "AHEAD 1/4"
+         3: return "AHEAD 1/2"
+         4: return "AHEAD 3/4"
+         5: return "AHEAD FULL"
+         _ : return str(t)

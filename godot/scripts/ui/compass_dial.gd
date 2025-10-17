@@ -57,6 +57,17 @@ func gui_input(event: InputEvent) -> void:
                 _apply_from_pos(mb.position)
     elif event is InputEventMouseMotion and dragging:
         _apply_from_pos((event as InputEventMouseMotion).position)
+    elif event is InputEventScreenTouch:
+        var st := event as InputEventScreenTouch
+        if st.pressed:
+            dragging = true
+            _apply_from_pos(st.position)
+        else:
+            dragging = false
+    elif event is InputEventScreenDrag:
+        var sd := event as InputEventScreenDrag
+        if dragging:
+            _apply_from_pos(sd.position)
 
 func _apply_from_pos(pos: Vector2) -> void:
     var c: Vector2 = size * 0.5
@@ -65,4 +76,3 @@ func _apply_from_pos(pos: Vector2) -> void:
     var deg: float = fposmod(rad_to_deg(ang) + 360.0, 360.0)
     target_heading = deg
     emit_signal("target_changed", target_heading)
-
