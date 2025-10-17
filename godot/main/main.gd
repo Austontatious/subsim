@@ -26,9 +26,9 @@ func _unhandled_input(event: InputEvent) -> void:
     elif event.is_action_pressed("ui_right"):
         engine.turn_deg(+5)
     elif event.is_action_pressed("ui_up"):
-        engine.set_telegraph(min(engine.telegraph + 1, 3))
+        engine.set_telegraph(min(engine.telegraph + 1, 5))
     elif event.is_action_pressed("ui_down"):
-        engine.set_telegraph(max(engine.telegraph - 1, -1))
+        engine.set_telegraph(max(engine.telegraph - 1, -5))
     elif event.is_action_pressed("ui_accept"):
         engine.cmd_ping()
 
