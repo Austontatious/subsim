@@ -9,8 +9,17 @@ class_name SubsimEngine
 # - set_depth_target(meters: float)
 
 const D0 := 500.0      # rolloff reference
-const MAX_SPEED := 8.0 # m/s at Flank
-const TELE_TO_SPEED := { -1: 0.0, 0: 1.5, 1: 3.0, 2: 5.0, 3: MAX_SPEED }
+const MAX_SPEED := 8.0 # m/s at Flank (forward or reverse)
+# Telegraph: -3..3 (reverse flank..forward flank)
+const TELE_TO_SPEED := {
+    -3: -MAX_SPEED,
+    -2: -5.0,
+    -1: -3.0,
+     0: 0.0,
+     1: 1.5,
+     2: 3.0,
+     3: 5.0,
+}
 
 signal sfx_ping()
 signal mix_contact(id: String, pan_l: float, pan_r: float, gain: float)
