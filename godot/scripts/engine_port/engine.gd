@@ -71,9 +71,9 @@ func step(dt: float) -> void:
     depth_m = move_toward(depth_m, depth_target, 3.0 * dt)
 
     # turn towards target heading with bounded rate
-    var diff := _angle_diff_deg(heading_target_deg, heading_deg)
-    var max_step := TURN_RATE_DEGPS * dt
-    var step_deg := clamp(diff, -max_step, max_step)
+    var diff: float = _angle_diff_deg(heading_target_deg, heading_deg)
+    var max_step: float = TURN_RATE_DEGPS * dt
+    var step_deg: float = clamp(diff, -max_step, max_step)
     heading_deg = fposmod(heading_deg + step_deg + 360.0, 360.0)
 
     var rad: float = deg_to_rad(heading_deg)

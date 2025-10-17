@@ -44,20 +44,20 @@ func _ready() -> void:
 func _on_tele_changed(v: float) -> void:
     engine.set_telegraph(int(round(v)))
 
-var wheel_dragging := false
+var wheel_dragging: bool = false
 func _on_wheel_input(event: InputEvent) -> void:
     if event is InputEventMouseButton:
         var mb := event as InputEventMouseButton
         if mb.button_index == MOUSE_BUTTON_LEFT:
             wheel_dragging = mb.pressed
     elif event is InputEventMouseMotion and wheel_dragging:
-        var center := heading_wheel.get_global_rect().get_center()
-        var pos := (event as InputEventMouseMotion).position + heading_wheel.get_global_rect().position
-        var dir := pos - center
-        var ang := rad_to_deg(atan2(dir.y, dir.x))
+        var center: Vector2 = heading_wheel.get_global_rect().get_center()
+        var pos: Vector2 = (event as InputEventMouseMotion).position + heading_wheel.get_global_rect().position
+        var dir: Vector2 = pos - center
+        var ang: float = rad_to_deg(atan2(dir.y, dir.x))
         engine.turn_deg(ang - 90.0) # coarse turn; refine later to absolute set
 
-var depth_dragging := false
+var depth_dragging: bool = false
 func _on_depth_input(event: InputEvent) -> void:
     if event is InputEventMouseButton:
         var mb := event as InputEventMouseButton
@@ -65,8 +65,8 @@ func _on_depth_input(event: InputEvent) -> void:
             depth_dragging = mb.pressed
     elif event is InputEventMouseMotion and depth_dragging:
         # Map vertical mouse movement in the control to depth 0..1000m
-        var r := depth_dial.get_global_rect()
-        var t := clamp((event as InputEventMouseMotion).position.y / max(1.0, r.size.y), 0.0, 1.0)
+        var r: Rect2 = depth_dial.get_global_rect()
+        var t: float = clamp((event as InputEventMouseMotion).position.y / max(1.0, r.size.y), 0.0, 1.0)
         engine.set_depth_target(1000.0 * t)
 
 func _on_compass_target(deg: float) -> void:
