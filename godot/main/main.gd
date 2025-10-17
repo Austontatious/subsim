@@ -41,6 +41,8 @@ func _ready() -> void:
     if heading_wheel:
         heading_wheel.mouse_filter = Control.MOUSE_FILTER_IGNORE
         heading_wheel.gui_input.connect(_on_wheel_input)
+    if depth_dial:
+        depth_dial.mouse_filter = Control.MOUSE_FILTER_STOP
     depth_dial.gui_input.connect(_on_depth_input)
     if compass and compass.has_signal("target_changed"):
         compass.connect("target_changed", Callable(self, "_on_compass_target"))

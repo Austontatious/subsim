@@ -24,7 +24,7 @@ func update_from_engine(pose: Dictionary) -> void:
     # Apply gridline skew (opposes the turn) based on heading error
     var tgt: float = float(pose.get("heading_target", hdg))
     var err: float = fposmod(tgt - hdg + 540.0, 360.0) - 180.0
-    var skew_scale: float = 4.0 # tune visual strength
+    var skew_scale: float = 6.0 # stronger visual
     var skew_val: float = float(clamp(err / 45.0, -1.0, 1.0)) * skew_scale
     if grid and grid.has_method("set_grid_skew"):
         grid.set_grid_skew(-skew_val) # oppose the turn visually
@@ -91,7 +91,7 @@ var _contact_nodes: Dictionary = {} # id -> Node3D
 func render_contacts(contacts: Array) -> void:
     var seen: Dictionary = {}
     for c in contacts:
-        var id: String = String(c.get("id", ""))
+        var id: String = _contact_id(c)
         if id == "":
             continue
         seen[id] = true
@@ -109,27 +109,67 @@ func render_contacts(contacts: Array) -> void:
                 n.queue_free()
             _contact_nodes.erase(k)
 
-func _make_contact_node(c: Dictionary) -> Node3D:
+func _make_contact_node(c) -> Node3D:
     var n := Node3D.new()
-    n.name = String(c.get("id", "C"))
+    n.name = _contact_id(c)
     var mesh := MeshInstance3D.new()
     var geom := CylinderMesh.new()
     geom.top_radius = 0.0
-    geom.bottom_radius = 0.4
-    geom.height = 1.0
+    geom.bottom_radius = 0.6
+    geom.height = 1.5
     mesh.mesh = geom
     var mat := StandardMaterial3D.new()
     mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-    mat.albedo_color = Color(1.0, 0.6, 0.3, 1.0) if String(c.get("typ","")) == "sub" else Color(0.5, 0.9, 0.6, 1.0)
+    mat.albedo_color = _contact_color(c)
     mesh.material_override = mat
     n.add_child(mesh)
     # Lift slightly above grid
     mesh.position = Vector3(0, 0.5, 0)
+
+    # Add floating label
+    var label := Label3D.new()
+    label.text = n.name
+    label.position = Vector3(0, 1.4, 0)
+    label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+    label.modulate = Color(1,1,1,0.9)
+    n.add_child(label)
     return n
 
-func _update_contact_node(n: Node3D, c: Dictionary) -> void:
-    var x: float = float(c.get("x", 0.0)) * WORLD_SCALE
-    var y: float = float(c.get("y", 0.0)) * WORLD_SCALE
+func _update_contact_node(n: Node3D, c) -> void:
+    var x: float = _contact_x(c) * WORLD_SCALE
+    var y: float = _contact_y(c) * WORLD_SCALE
     n.position = Vector3(x, 0.0, y)
-    var hdg: float = float(c.get("heading_deg", c.get("heading", 0.0)))
+    var hdg: float = _contact_heading(c)
     n.rotation.y = deg_to_rad(hdg)
+
+func _contact_id(c) -> String:
+    if c is Dictionary:
+        return String(c.get("id", ""))
+    return String(c.id)
+
+func _contact_heading(c) -> float:
+    if c is Dictionary:
+        return float(c.get("heading_deg", c.get("heading", 0.0)))
+    return float(c.heading_deg)
+
+func _contact_x(c) -> float:
+    if c is Dictionary:
+        return float(c.get("x", 0.0))
+    return float(c.x)
+
+func _contact_y(c) -> float:
+    if c is Dictionary:
+        return float(c.get("y", 0.0))
+    return float(c.y)
+
+func _contact_color(c) -> Color:
+    var t := ""
+    if c is Dictionary:
+        t = String(c.get("typ", ""))
+    else:
+        t = String(c.typ)
+    if t == "sub":
+        return Color(1.0, 0.5, 0.2, 1.0)
+    if t == "escort":
+        return Color(0.2, 1.0, 0.6, 1.0)
+    return Color(0.6, 0.9, 1.0, 1.0)
