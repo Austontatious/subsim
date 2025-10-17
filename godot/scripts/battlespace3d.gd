@@ -24,8 +24,8 @@ func update_from_engine(pose: Dictionary) -> void:
     # Apply gridline skew (opposes the turn) based on heading error
     var tgt: float = float(pose.get("heading_target", hdg))
     var err: float = fposmod(tgt - hdg + 540.0, 360.0) - 180.0
-    var skew_scale := 4.0 # tune visual strength
-    var skew_val := clamp(err / 45.0, -1.0, 1.0) * skew_scale
+    var skew_scale: float = 4.0 # tune visual strength
+    var skew_val: float = float(clamp(err / 45.0, -1.0, 1.0)) * skew_scale
     if grid and grid.has_method("set_grid_skew"):
         grid.set_grid_skew(-skew_val) # oppose the turn visually
 
