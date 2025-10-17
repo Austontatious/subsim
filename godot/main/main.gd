@@ -17,6 +17,8 @@ func _physics_process(_dt: float) -> void:
     hud_label.text = "HDG %03d  SPD %.1f m/s  DEPTH %.0f  PING %.1fs" % [int(p.heading), p.speed, p.depth, p.ping_age]
     if space3d and space3d.has_method("update_from_engine"):
         space3d.update_from_engine(p)
+        if space3d.has_method("render_contacts"):
+            space3d.render_contacts(engine.get_contacts())
     if compass:
         compass.set("current_heading", p.heading)
         compass.set("target_heading", p.heading_target)
@@ -61,8 +63,10 @@ func _on_wheel_input(event: InputEvent) -> void:
         var center: Vector2 = heading_wheel.get_global_rect().get_center()
         var pos: Vector2 = (event as InputEventMouseMotion).position + heading_wheel.get_global_rect().position
         var dir: Vector2 = pos - center
+        # Map pointer position to an absolute heading target (0 at up/North)
         var ang: float = rad_to_deg(atan2(dir.y, dir.x))
-        engine.turn_deg(ang - 90.0) # coarse turn; refine later to absolute set
+        var deg: float = fposmod(ang + 90.0 + 360.0, 360.0)
+        engine.set_heading_target(deg)
 
 var depth_dragging: bool = false
 func _on_depth_input(event: InputEvent) -> void:
