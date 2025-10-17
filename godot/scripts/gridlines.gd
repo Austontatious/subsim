@@ -37,7 +37,7 @@ func _ready() -> void:
     var shader := Shader.new()
     shader.code = """
 shader_type spatial;
-render_mode unshaded, cull_disabled;
+render_mode unshaded, cull_disabled, blend_mix;
 uniform float skew : hint_range(-10.0, 10.0) = 0.0;
 uniform float half_size = 50.0;
 
@@ -46,6 +46,11 @@ void vertex() {
     // Non-linear pull for a curved look
     float curv = t * abs(t);
     POSITION.x += skew * curv;
+}
+
+void fragment() {
+    ALBEDO = COLOR.rgb;
+    ALPHA = COLOR.a;
 }
 """
     _shader_mat = ShaderMaterial.new()

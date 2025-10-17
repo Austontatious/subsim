@@ -28,6 +28,10 @@ func update_from_engine(pose: Dictionary) -> void:
     var skew_val: float = float(clamp(err / 45.0, -1.0, 1.0)) * skew_scale
     if grid and grid.has_method("set_grid_skew"):
         grid.set_grid_skew(-skew_val) # oppose the turn visually
+    # Move grid vertically to reflect player depth
+    var depth: float = float(pose.get("depth", 0.0))
+    if grid:
+        grid.position.y = -depth * WORLD_SCALE
 
 func _unhandled_input(event: InputEvent) -> void:
     if event is InputEventMagnifyGesture:

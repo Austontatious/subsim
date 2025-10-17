@@ -80,8 +80,21 @@ func _on_depth_input(event: InputEvent) -> void:
     elif event is InputEventMouseMotion and depth_dragging:
         # Map vertical mouse movement in the control to depth 0..1000m
         var r: Rect2 = depth_dial.get_global_rect()
-        var t: float = clamp((event as InputEventMouseMotion).position.y / max(1.0, r.size.y), 0.0, 1.0)
+        var pos: Vector2 = (event as InputEventMouseMotion).position + r.position
+        var t: float = clamp((pos.y - r.position.y) / max(1.0, r.size.y), 0.0, 1.0)
         engine.set_depth_target(1000.0 * t)
+    elif event is InputEventScreenTouch:
+        var st := event as InputEventScreenTouch
+        depth_dragging = st.pressed
+        if st.pressed:
+            var r2: Rect2 = depth_dial.get_global_rect()
+            var t2: float = clamp((st.position.y - r2.position.y) / max(1.0, r2.size.y), 0.0, 1.0)
+            engine.set_depth_target(1000.0 * t2)
+    elif event is InputEventScreenDrag and depth_dragging:
+        var sd := event as InputEventScreenDrag
+        var r3: Rect2 = depth_dial.get_global_rect()
+        var t3: float = clamp((sd.position.y - r3.position.y) / max(1.0, r3.size.y), 0.0, 1.0)
+        engine.set_depth_target(1000.0 * t3)
 
 func _on_compass_target(deg: float) -> void:
     engine.set_heading_target(deg)
