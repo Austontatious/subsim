@@ -1,5 +1,5 @@
 extends Node
-class_name Engine
+class_name SubsimEngine
 
 # Public API:
 # - step(dt: float)
@@ -15,24 +15,24 @@ const TELE_TO_SPEED := { -1: 0.0, 0: 1.5, 1: 3.0, 2: 5.0, 3: MAX_SPEED }
 signal sfx_ping()
 signal mix_contact(id: String, pan_l: float, pan_r: float, gain: float)
 
-var rng := RandomNumberGenerator.new()
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 # State
-var heading_deg := 0.0
-var speed_mps := 0.0
-var depth_m := 200.0
-var depth_target := 200.0
-var telegraph := -1  # Stop
-var ping_age := 999.0
+var heading_deg: float = 0.0
+var speed_mps: float = 0.0
+var depth_m: float = 200.0
+var depth_target: float = 200.0
+var telegraph: int = -1  # Stop
+var ping_age: float = 999.0
 
 # Contacts (demo)
 class Contact:
-    var id := ""
-    var typ := "merchant" # "sub" | "merchant" | "escort"
-    var x := 0.0; var y := 0.0
-    var heading_deg := 0.0
-    var speed_mps := 0.0
-    var confidence := 0.4
+    var id: String = ""
+    var typ: String = "merchant" # "sub" | "merchant" | "escort"
+    var x: float = 0.0; var y: float = 0.0
+    var heading_deg: float = 0.0
+    var speed_mps: float = 0.0
+    var confidence: float = 0.4
 
 func _ready() -> void:
     rng.seed = 7
@@ -48,19 +48,19 @@ var _contacts: Array = []
 
 func step(dt: float) -> void:
     # player kinematics
-    var tgt := TELE_TO_SPEED.get(telegraph, 0.0)
+    var tgt: float = float(TELE_TO_SPEED.get(telegraph, 0.0))
     speed_mps = move_toward(speed_mps, tgt, 1.5 * dt)
     depth_m = move_toward(depth_m, depth_target, 3.0 * dt)
 
-    var rad := deg_to_rad(heading_deg)
-    var vx := cos(rad) * speed_mps
-    var vy := sin(rad) * speed_mps
+    var rad: float = deg_to_rad(heading_deg)
+    var vx: float = cos(rad) * speed_mps
+    var vy: float = sin(rad) * speed_mps
     _player_x += vx * dt
     _player_y += vy * dt
 
     # update contacts
     for c in _contacts:
-        var cr := deg_to_rad(c.heading_deg)
+        var cr: float = deg_to_rad(c.heading_deg)
         c.x += cos(cr) * c.speed_mps * dt
         c.y += sin(cr) * c.speed_mps * dt
         c.confidence = clamp(c.confidence + rng.randf_range(-0.02, 0.03), 0.2, 1.0)
@@ -71,17 +71,17 @@ func step(dt: float) -> void:
     # Note: active returns handled when cmd_ping() is called
 
 func _emit_passive_mix():
-    var own_noise := clamp(speed_mps * 0.05, 0.0, 0.8)
+    var own_noise: float = clamp(speed_mps * 0.05, 0.0, 0.8)
     for c in _contacts:
-        var dx := c.x - _player_x
-        var dy := c.y - _player_y
-        var dist := sqrt(dx*dx + dy*dy)
-        var bearing := rad_to_deg(atan2(dy, dx)) - heading_deg
-        var az := deg_to_rad(fposmod(bearing, 360.0))
-        var l := sqrt(0.5 * (1.0 + cos(az)))
-        var r := sqrt(0.5 * (1.0 - cos(az)))
+        var dx: float = c.x - _player_x
+        var dy: float = c.y - _player_y
+        var dist: float = sqrt(dx*dx + dy*dy)
+        var bearing: float = rad_to_deg(atan2(dy, dx)) - heading_deg
+        var az: float = deg_to_rad(fposmod(bearing, 360.0))
+        var l: float = sqrt(0.5 * (1.0 + cos(az)))
+        var r: float = sqrt(0.5 * (1.0 - cos(az)))
         # distance rolloff + confidence + own_noise, no occlusion yet
-        var g := 1.0 / (1.0 + pow(dist / D0, 2.0))
+        var g: float = 1.0 / (1.0 + pow(dist / D0, 2.0))
         g *= (0.4 + 0.6 * c.confidence)
         g *= max(0.2, 1.0 - own_noise)
         emit_signal("mix_contact", c.id, l, r, g)
@@ -101,8 +101,8 @@ func set_depth_target(meters: float) -> void:
     depth_target = clamp(meters, 0.0, 1000.0)
 
 # Exposed for HUD
-var _player_x := 0.0
-var _player_y := 0.0
+var _player_x: float = 0.0
+var _player_y: float = 0.0
 func get_player_pose() -> Dictionary:
     return {
         "x": _player_x, "y": _player_y, "depth": depth_m,
@@ -110,4 +110,3 @@ func get_player_pose() -> Dictionary:
     }
 func get_contacts() -> Array:
     return _contacts
-

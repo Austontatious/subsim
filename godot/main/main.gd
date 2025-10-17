@@ -1,6 +1,6 @@
 extends Node
 
-@onready var engine: Engine = $Engine
+@onready var engine: SubsimEngine = $Engine as SubsimEngine
 @onready var hud_label: Label = $CanvasLayer/HUD/Label
 
 const DT := 1.0 / 30.0
@@ -21,4 +21,3 @@ func _unhandled_input(event: InputEvent) -> void:
         engine.set_telegraph(max(engine.telegraph - 1, -1))
     elif event.is_action_pressed("ui_accept"):
         engine.cmd_ping()
-
