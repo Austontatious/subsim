@@ -4,8 +4,6 @@ extends Node3D
 @onready var hud_label: Label = $CanvasLayer/HUD/Label
 @onready var tele: VSlider = $CanvasLayer/HUD/Telegraph
 @onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
-@onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
-@onready var tele_label: Label = $CanvasLayer/HUD/TelegraphLabel
 @onready var heading_wheel: Control = $CanvasLayer/HUD/HeadingWheel
 @onready var depth_dial: Control = $CanvasLayer/HUD/DepthDial
 @onready var space3d: Node3D = get_node_or_null("Battlespace3D") as Node3D
@@ -47,21 +45,9 @@ func _ready() -> void:
     if ping_btn:
         ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
     _on_tele_changed(tele.value)
-    var ping_btn := get_node_or_null("CanvasLayer/HUD/PingButton")
-    if ping_btn:
-        ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
-    _on_tele_changed(tele.value)
-    var ping_btn := get_node_or_null("CanvasLayer/HUD/PingButton")
-    if ping_btn:
-        ping_btn.connect("pressed", Callable(self, "_on_ping_pressed"))
-    _on_tele_changed(tele.value)
 
 func _on_tele_changed(v: float) -> void:
     engine.set_telegraph(int(round(v)))
-    if tele_label:
-        tele_label.text = _telegraph_text(int(round(v)))
-    if tele_label:
-        tele_label.text = _telegraph_text(int(round(v)))
     if tele_label:
         tele_label.text = _telegraph_text(int(round(v)))
 
