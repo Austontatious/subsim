@@ -7,6 +7,19 @@ from typing import Dict, Optional
 
 from .assets import ensure_assets
 from .config import AUDIO_SAMPLE_RATE
+from .events import (
+    GameEvent,
+    EVENT_PING,
+    EVENT_TORP_LAUNCH,
+    EVENT_DETONATION,
+    EVENT_TORP_HIT,
+    EVENT_UI_CONFIRM,
+    EVENT_UI_ALERT,
+    EVENT_FIRE_SOLUTION_START,
+    EVENT_FIRE_SOLUTION_READY,
+    EVENT_FIRE_SOLUTION_MISS,
+    EVENT_TORP_IN_WATER,
+)
 
 try:  # pragma: no cover - optional dependency
     import pygame
@@ -26,6 +39,10 @@ def _equal_power_pan(azimuth_rad: float) -> tuple[float, float]:
     left = math.sqrt(0.5 * (1.0 + math.cos(az)))
     right = math.sqrt(0.5 * (1.0 - math.cos(az)))
     return left, right
+
+
+def _pan_from_bearing(bearing_deg: float) -> tuple[float, float]:
+    return _equal_power_pan(math.radians(bearing_deg))
 
 
 @dataclass
@@ -49,13 +66,23 @@ class AudioEngine:
         self.master_gain = 1.0
         self.channels: Dict[str, _Channel] = {}
         self.sounds: Dict[str, "pygame.mixer.Sound"] = {}
+        self.duck_gain = 1.0
+        self._duck_timer = 0.0
+        self._duck_duration = 0.6
+        self._duck_min_gain = 0.45
+        self._duck_release = 0.35
 
         if not self.headless and pygame is not None:
-            pygame.mixer.pre_init(AUDIO_SAMPLE_RATE, size=-16, channels=2, buffer=512)
-            pygame.mixer.init()
-            for name, variants in self.assets.items():
-                wav = variants["clean"]
-                self.sounds[name] = pygame.mixer.Sound(wav.as_posix())
+            try:
+                pygame.mixer.pre_init(AUDIO_SAMPLE_RATE, size=-16, channels=2, buffer=512)
+                pygame.mixer.init()
+                for name, variants in self.assets.items():
+                    wav = variants["clean"]
+                    self.sounds[name] = pygame.mixer.Sound(wav.as_posix())
+            except Exception:
+                # Fallback to silent mode if audio init fails.
+                self.headless = True
+                self.sounds = {}
 
     def play_loop(self, asset_name: str, key: str) -> None:
         if key in self.channels:
@@ -89,7 +116,7 @@ class AudioEngine:
     def set_master_volume(self, db: float) -> None:
         self.master_gain = max(0.0, min(1.0, _db_to_gain(db)))
         for ch in self.channels.values():
-            ch.set_volume(ch.left * self.master_gain, ch.right * self.master_gain)
+            ch.set_volume(ch.left * self.master_gain * self.duck_gain, ch.right * self.master_gain * self.duck_gain)
 
     def set_contact_mix(
         self,
@@ -112,7 +139,60 @@ class AudioEngine:
         gain = max(0.0, min(1.0, gain))
         azimuth_rad = math.radians(azimuth_deg)
         left, right = _equal_power_pan(azimuth_rad)
-        channel.set_volume(left * gain * self.master_gain, right * gain * self.master_gain)
+        channel.set_volume(
+            left * gain * self.master_gain * self.duck_gain,
+            right * gain * self.master_gain * self.duck_gain,
+        )
+
+    def update(self, dt: float, events: list[GameEvent]) -> None:
+        if events:
+            if any(evt.priority >= 70 for evt in events):
+                self._duck_timer = max(self._duck_timer, self._duck_duration)
+            for evt in events:
+                self._play_event(evt)
+
+        if self._duck_timer > 0.0:
+            self._duck_timer = max(0.0, self._duck_timer - dt)
+            target = self._duck_min_gain
+        else:
+            target = 1.0
+        if abs(self.duck_gain - target) > 1e-3:
+            alpha = min(1.0, dt / max(1e-6, self._duck_release))
+            self.duck_gain += (target - self.duck_gain) * alpha
+
+    def _play_event(self, evt: GameEvent) -> None:
+        if self.headless or pygame is None:
+            return
+
+        asset = None
+        if evt.type in (EVENT_PING, EVENT_FIRE_SOLUTION_READY):
+            asset = "ping"
+        elif evt.type in (EVENT_TORP_LAUNCH, EVENT_TORP_IN_WATER):
+            asset = "torpedo"
+        elif evt.type in (EVENT_DETONATION, EVENT_TORP_HIT):
+            if evt.payload.get("weapon") == "mine":
+                asset = "mine"
+            else:
+                asset = "torpedo"
+        elif evt.type in (EVENT_UI_CONFIRM, EVENT_UI_ALERT, EVENT_FIRE_SOLUTION_START, EVENT_FIRE_SOLUTION_MISS):
+            asset = "ping"
+
+        if asset is None:
+            return
+        sound = self.sounds.get(asset)
+        if sound is None:
+            return
+        handle = pygame.mixer.find_channel()
+        if handle is None:
+            handle = pygame.mixer.Channel(pygame.mixer.get_num_channels() - 1)
+
+        if evt.bearing_deg is not None:
+            left, right = _pan_from_bearing(evt.bearing_deg)
+        else:
+            left, right = 1.0, 1.0
+        gain = self.master_gain
+        handle.set_volume(left * gain, right * gain)
+        handle.play(sound)
 
     def shutdown(self) -> None:
         if not self.headless and pygame is not None:

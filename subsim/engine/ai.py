@@ -11,6 +11,7 @@ from .world import World
 @dataclass
 class AiController:
     manager: ContactManager
+    aggression: float = 1.0
     last_ping_time: float = -1e9
 
     def notify_ping(self, world_time: float) -> None:
@@ -30,10 +31,11 @@ class AiController:
             # steer toward player after ping
             desired = math.degrees(math.atan2(player_pos[1] - contact.position[1], player_pos[0] - contact.position[0]))
             error = (desired - heading + 540.0) % 360.0 - 180.0
-            heading = (heading + max(-25.0 * dt, min(25.0 * dt, error * 0.5))) % 360.0
+            turn_rate = 25.0 * self.aggression
+            heading = (heading + max(-turn_rate * dt, min(turn_rate * dt, error * 0.5))) % 360.0
         else:
             # search pattern
-            heading = (heading + 12.0 * dt) % 360.0
+            heading = (heading + 12.0 * self.aggression * dt) % 360.0
         contact.heading_deg = heading
 
 

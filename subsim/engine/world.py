@@ -5,7 +5,7 @@ import math
 from dataclasses import dataclass, field
 from typing import Tuple
 
-from .config import (
+from ..config import (
     FRAME_DT,
     MAX_DEPTH_M,
     MAX_WORLD_EXTENT_M,

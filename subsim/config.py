@@ -17,6 +17,16 @@ THERMOCLINE_DEPTH_M = -150.0
 THERMOCLINE_ATTEN_DB = 12.0
 MAX_WORLD_EXTENT_M = 1500.0
 MAX_DEPTH_M = -450.0
+EXTRACT_RADIUS_M = 1000.0
+EVADE_DISTANCE_M = 900.0
+EVADE_TIME_S = 4.0
+LOCATE_CONFIDENCE = 0.2
+AUDIO_MAX_DISTANCE_M = 2000.0
+CLASSIFY_CONFIDENCE = 0.55
+PING_COOLDOWN_S = 4.0
+PITCH_RATE_MPS = 20.0
+FIRE_SOLUTION_READY_S = 0.8
+FIRE_SOLUTION_WINDOW_S = 1.6
 
 TELEGRAPH_SPEEDS: Dict[str, float] = {
     "STOP": 0.0,
@@ -25,19 +35,24 @@ TELEGRAPH_SPEEDS: Dict[str, float] = {
     "FULL": 7.0,
     "FLANK": 11.0,
 }
+CRUISE_TELEGRAPH = "1/2"
 
 KEYMAP = {
-    "turn_left": "LEFT",
-    "turn_right": "RIGHT",
-    "speed_up": "UP",
-    "speed_down": "DOWN",
-    "depth_up": "r",
-    "depth_down": "s",
-    "ping": "p",
-    "fire_torpedo": "t",
-    "drop_mine": "m",
-    "toggle_waterfall": "W",
-    "quit": "q",
+    "heading_left": "LEFT/A",
+    "heading_right": "RIGHT/D",
+    "heading_fine_left": "Q",
+    "heading_fine_right": "E",
+    "pitch_up": "W",
+    "pitch_down": "S",
+    "roll_left": "Z",
+    "roll_right": "C",
+    "ping": "SPACE",
+    "fire_torpedo": "T",
+    "cycle_contact": "TAB",
+    "lock_contact": "ENTER",
+    "help": "H",
+    "pause": "ESC",
+    "quit": "Q",
 }
 
 

@@ -1,5 +1,5 @@
-from subsim.contacts import Contact
-from subsim.weapons import Mine, Torpedo, WeaponManager
+from subsim.engine.contacts import Contact
+from subsim.engine.weapons import Mine, Torpedo, WeaponManager
 
 
 def moving_contact() -> Contact:

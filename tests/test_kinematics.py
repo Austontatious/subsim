@@ -1,5 +1,5 @@
 from subsim.config import TELEGRAPH_SPEEDS
-from subsim.world import World
+from subsim.engine.world import World
 
 
 def test_player_accelerates_to_order():

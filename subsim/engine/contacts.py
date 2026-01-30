@@ -6,7 +6,7 @@ import random
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List
 
-from .config import MAX_WORLD_EXTENT_M
+from ..config import MAX_WORLD_EXTENT_M
 from .world import Vec3, clamp
 
 
@@ -61,6 +61,9 @@ class ContactManager:
             noise=0.45,
         )
         self.contacts = {merchant.ident: merchant, hunter.ident: hunter}
+
+    def spawn_contacts(self, contacts: Iterable[Contact]) -> None:
+        self.contacts = {contact.ident: contact for contact in contacts}
 
     def update(self, dt: float) -> None:
         for contact in self.contacts.values():

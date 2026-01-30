@@ -4,7 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Iterable, List
 
-from .config import SPEED_OF_SOUND
+from ..config import SPEED_OF_SOUND
 from .contacts import Contact
 from .world import Vec3, World
 
@@ -51,8 +51,9 @@ class SensorTick:
 class SensorSuite:
     """Combines passive audio model and active sonar pings."""
 
-    def __init__(self) -> None:
+    def __init__(self, sensor_noise: float = 0.0) -> None:
         self.last_ping_time: float = -1e9
+        self.sensor_noise = max(0.0, min(0.5, sensor_noise))
 
     def sample_passive(self, world: World, contacts: Iterable[Contact]) -> List[PassiveContact]:
         tracks: List[PassiveContact] = []
@@ -61,9 +62,11 @@ class SensorSuite:
         for contact in contacts:
             distance = World.distance(player_pos, contact.position)
             bearing = World.bearing(player_pos, contact.position)
-            confidence = max(0.05, min(1.0, 1.0 - distance / 2000.0))
+            confidence = max(0.05, min(1.0, 1.0 - distance / 1600.0))
+            if self.sensor_noise > 0.0:
+                confidence = max(0.05, confidence * (1.0 - self.sensor_noise))
             occlusion = World.thermocline_layers(player_pos[2], contact.depth_m)
-            rolloff = 1.0 / (1.0 + (distance / 500.0) ** 2)
+            rolloff = 1.0 / (1.0 + (distance / 420.0) ** 2)
             gain = rolloff * confidence * max(0.2, 1.0 - own_noise) * (0.5 ** occlusion)
             tracks.append(
                 PassiveContact(

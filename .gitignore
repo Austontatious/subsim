@@ -1,2 +1,7 @@
 .git-credentials
 .venv/
+.venv-build/
+dist/
+build/
+*.spec
+__pycache__/

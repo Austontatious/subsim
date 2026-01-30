@@ -1,6 +1,6 @@
-from subsim.contacts import Contact
-from subsim.sensors import SensorSuite
-from subsim.world import World
+from subsim.engine.contacts import Contact
+from subsim.engine.sensors import SensorSuite
+from subsim.engine.world import World
 from subsim.config import SPEED_OF_SOUND
 
 

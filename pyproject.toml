@@ -9,6 +9,11 @@ description = "Audio-first submarine skirmish prototype."
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "SubSim Team"}]
+license = "MIT"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+]
 dependencies = [
   "pyglet>=2.0.8",
   "pygame>=2.5.0",
@@ -21,3 +26,8 @@ dev = [
 
 [project.scripts]
 subsim = "subsim.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["subsim"]
+exclude = ["core", "desktop", "godot", "assets", "tests"]
