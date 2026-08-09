@@ -1,0 +1,102 @@
+{
+  "report_version": "runtime_acoustic_integration_report.v1",
+  "generated_utc": "2026-04-24T02:07:41Z",
+  "desktop_runtime": {
+    "status": "active",
+    "integration_points": [
+      "subsim/game.py::_update_audio_mix",
+      "subsim/audio.py::play_external_loop",
+      "subsim/runtime_acoustic.py::RuntimeHybridLayerV1"
+    ],
+    "active_families": [
+      "ambient_soundscape",
+      "marine_mammal_whale",
+      "marine_mammal_other",
+      "surface_vessel",
+      "intermittent_machinery_archetype"
+    ],
+    "observation_surface": "acoustic.runtime_renderer",
+    "default_preset": "medium_clutter"
+  },
+  "preset_pack": {
+    "pack_path": "subsim/runtime_acoustic_presets_v1.json",
+    "godot_parity_copy": "godot/audio/runtime_acoustic_presets_v1.json",
+    "presets": [
+      "low_clutter",
+      "medium_clutter",
+      "high_clutter",
+      "open_ocean_quiet",
+      "coastal_busy",
+      "biologics_heavy"
+    ],
+    "control_axes": [
+      "foundation ambient/self-noise/player-hum multipliers",
+      "family enabled/intensity/variability/density",
+      "global mix gain",
+      "duration per family render loop"
+    ],
+    "runtime_selection": [
+      "CLI: --acoustic-preset <name>",
+      "CLI: --list-acoustic-presets"
+    ]
+  },
+  "contract_mapping": {
+    "truth_layer": "subsim/acoustic_contract.py",
+    "renderer_presentation_layer": "subsim/runtime_acoustic.py",
+    "family_hooks": {
+      "ambient_soundscape": "foundation.ambient",
+      "marine_mammal_whale": "contacts.biologic_large",
+      "marine_mammal_other": "contacts.biologic_other",
+      "surface_vessel": "contacts.surface_vessel",
+      "intermittent_machinery_archetype": "contacts.unknown_contact_like"
+    }
+  },
+  "godot_parity": {
+    "status": "partial_hook",
+    "shared_now": [
+      "shared runtime preset pack JSON",
+      "foundation multiplier application in AcousticMixer",
+      "surface vessel + intermittent machinery gain shaping in contact mix"
+    ],
+    "desktop_only_now": [
+      "direct playback of desktop-generated hybrid renderer wav cache loops",
+      "full runtime family layer graph"
+    ],
+    "next_step": "Feed Godot mixer with desktop runtime layer metadata/audio proxies for full family parity."
+  },
+  "explicit_cues_preserved": [
+    "PING",
+    "RETURN",
+    "FIRE_SOLUTION_START",
+    "FIRE_SOLUTION_READY",
+    "FIRE_SOLUTION_MISS",
+    "TORP_LAUNCH",
+    "TORP_IN_WATER",
+    "TORP_HIT",
+    "DETONATION",
+    "UI_CONFIRM",
+    "UI_ALERT"
+  ],
+  "validation": {
+    "pytest": {
+      "command": ".venv/bin/python -m pytest -q tests/test_runtime_acoustic_integration.py tests/test_game_acoustic_observation.py tests/test_godot_acoustic_wiring.py tests/test_acoustic_contract_docs_sync.py",
+      "result": "pass",
+      "summary": "10 passed in 32.34s"
+    },
+    "headless_smoke": [
+      {
+        "command": "SDL_AUDIODRIVER=dummy PYGLET_HEADLESS=true .venv/bin/python -m subsim --headless --ticks 60 --acoustic-preset low_clutter",
+        "result": "pass"
+      },
+      {
+        "command": "SDL_AUDIODRIVER=dummy PYGLET_HEADLESS=true .venv/bin/python -m subsim --headless --ticks 60 --acoustic-preset high_clutter",
+        "result": "pass"
+      }
+    ]
+  },
+  "remaining_gaps": [
+    "Godot path currently consumes preset multipliers but not full renderer family loop assets.",
+    "Perceptual quality is still listening-validated; no objective timbre quality metric gate yet.",
+    "Runtime reports are generated as static artifacts; no automatic CI regeneration gate yet."
+  ]
+}

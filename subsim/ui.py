@@ -26,7 +26,7 @@ HELP_LINES = [
     "Cycle contact: Tab",
     "Lock contact: Enter",
     "Pause: Esc",
-    "Quit: Q",
+    "Quit: X",
 ]
 
 

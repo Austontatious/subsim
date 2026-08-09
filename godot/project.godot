@@ -2,16 +2,26 @@
 ; It's best edited using the editor UI and not directly,
 ; since the parameters that go here are not all obvious.
 ;
-; Format: https://docs.godotengine.org/en/stable/classes/class_projectsettings.html
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
 
 [application]
-config/version="0.1.0"
+
 config/name="SubSim"
+config/version="0.1.0"
 run/main_scene="res://main/Main.tscn"
+config/features=PackedStringArray("4.2")
+config/icon="res://icon.png"
 
 [physics]
+
 common/physics_ticks_per_second=30
 
 [rendering]
-environment/defaults/default_environment="res://default_env.tres"
 
+environment/defaults/default_environment="res://default_env.tres"
+renderer/rendering_method="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

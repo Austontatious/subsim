@@ -1,0 +1,32 @@
+{
+  "class_counts": {
+    "ambient_ocean": 40,
+    "biologic_fish": 18,
+    "biologic_mammal": 10,
+    "surface_vessel": 10
+  },
+  "features_path": "/mnt/data/subsim/data/hydrophone/features/features.parquet",
+  "generated": "2026-05-07T16:12:34+00:00",
+  "group_column": "group_id",
+  "group_counts": {
+    "ambient_ocean": 16,
+    "biologic_fish": 10,
+    "biologic_mammal": 10,
+    "surface_vessel": 10
+  },
+  "heldout_source_eval_rows": 15,
+  "include_synthetic": false,
+  "known_leakage_risks": [
+    "corpus is still small"
+  ],
+  "missing_feature_clip_ids": {
+    "heldout_source_eval": [],
+    "train": [],
+    "validation": []
+  },
+  "should_metrics_be_trusted": "limited",
+  "split_dir": "/mnt/data/subsim/data/hydrophone/manifests/splits",
+  "split_strategy": "fixed_split_manifest",
+  "train_rows": 47,
+  "validation_rows": 16
+}

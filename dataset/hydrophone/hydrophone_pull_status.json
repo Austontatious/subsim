@@ -1,0 +1,64 @@
+{
+  "pipeline_stage": "pull",
+  "generated_utc": "2026-04-24T00:35:55+00:00",
+  "manifest_path": "/mnt/data/subsim/dataset/hydrophone/hydrophone_sources_manifest.json",
+  "pull_records_path": "/mnt/data/subsim/dataset/hydrophone/staging/pulled_samples.jsonl",
+  "source_status": [
+    {
+      "source_id": "hf_wmms_parquet",
+      "name": "Watkins Marine Mammal Sound (WMMS) parquet mirror",
+      "adapter": "hf_parquet_audio_bytes",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 200,
+      "elapsed_s": 1.167,
+      "metadata_only": false
+    },
+    {
+      "source_id": "hf_shipsear",
+      "name": "ShipsEar underwater ship-radiated noise",
+      "adapter": "hf_zip_class_dirs",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 225,
+      "elapsed_s": 0.783,
+      "metadata_only": false
+    },
+    {
+      "source_id": "mbari_pacific_sound_2khz",
+      "name": "MBARI Pacific Sound 2kHz hydrophone archive",
+      "adapter": "http_wav_range_extract",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 9,
+      "elapsed_s": 2.859,
+      "metadata_only": false
+    },
+    {
+      "source_id": "dclde_reference",
+      "name": "DCLDE workshop challenge datasets",
+      "adapter": "metadata_only",
+      "pull_mode": "metadata_only",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 0,
+      "elapsed_s": 0.0,
+      "metadata_only": true
+    },
+    {
+      "source_id": "noaa_passive_acoustics_reference",
+      "name": "NOAA passive acoustic archives",
+      "adapter": "metadata_only",
+      "pull_mode": "metadata_only",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 0,
+      "elapsed_s": 0.0,
+      "metadata_only": true
+    }
+  ],
+  "pulled_total": 434
+}

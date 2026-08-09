@@ -1,0 +1,1045 @@
+{
+  "renderer_params_version": "renderer_params_v1",
+  "generated_utc": "2026-04-24T01:40:00+00:00",
+  "source_analysis": {
+    "analysis_report_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_category_analysis_report.json",
+    "gap_report_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_dataset_gap_report.json",
+    "exemplar_path": "/mnt/data/subsim/dataset/hydrophone/analysis/hydrophone_category_exemplars.json",
+    "features_csv_path": "/mnt/data/subsim/dataset/hydrophone/features/hydrophone_features.csv",
+    "analysis_report_version": "hydrophone_category_analysis.v1",
+    "analysis_sample_count": 434
+  },
+  "global": {
+    "safe_contact_policy": "Contact-like rendering uses abstract archetypes only and never nation/class-specific military signatures.",
+    "supported_families": [
+      "ambient_soundscape",
+      "marine_mammal_whale",
+      "marine_mammal_other",
+      "surface_vessel",
+      "intermittent_machinery_archetype"
+    ],
+    "acoustic_contract_schema_version": "acoustic-substrate.v1",
+    "default_sample_rate_hz": 44100
+  },
+  "families": {
+    "ambient_soundscape": {
+      "family": "ambient_soundscape",
+      "synthesis_mode": "ambient_bed",
+      "acoustic_contract_hook": "foundation.ambient",
+      "default_duration_s": 10.0,
+      "seed_mix": 0.18,
+      "analysis_basis": {
+        "sample_count": 54,
+        "source_categories": [
+          "ambient_soundscape"
+        ],
+        "safe_archetype_filter": null,
+        "source_counts": {
+          "hf_shipsear": 45,
+          "mbari_pacific_sound_2khz": 9
+        },
+        "label_quality_counts": {
+          "exact": 45,
+          "inferred": 9
+        }
+      },
+      "feature_ranges": {
+        "dominant_freq_hz": {
+          "min": 10.0,
+          "max": 550.0,
+          "mean": 112.22222222222223,
+          "std": 132.01664691139675,
+          "p10": 20.0,
+          "p50": 55.0,
+          "p90": 292.00000000000017
+        },
+        "spectral_centroid_hz": {
+          "min": 115.6471170715816,
+          "max": 4085.66029529477,
+          "mean": 1570.8992322732493,
+          "std": 1078.995628836766,
+          "p10": 230.3601034030013,
+          "p50": 1447.04261810208,
+          "p90": 3053.661441127905
+        },
+        "spectral_bandwidth_hz": {
+          "min": 204.6819206118898,
+          "max": 2456.7004298824713,
+          "mean": 1507.161343074271,
+          "std": 642.3971146706151,
+          "p10": 242.7551964316542,
+          "p50": 1635.7250765636022,
+          "p90": 2252.507932469526
+        },
+        "spectral_rolloff_hz": {
+          "min": 219.17293233082708,
+          "max": 6925.959595959596,
+          "mean": 3021.2909518465085,
+          "std": 1902.6201443119596,
+          "p10": 488.6867167919802,
+          "p50": 2962.0202020202023,
+          "p90": 5663.757575757576
+        },
+        "spectral_flatness": {
+          "min": 0.07349082082509995,
+          "max": 0.5412536263465881,
+          "mean": 0.2813443377338074,
+          "std": 0.1414164984781756,
+          "p10": 0.10833652019500732,
+          "p50": 0.2785969227552414,
+          "p90": 0.5001262068748474
+        },
+        "narrowband_index": {
+          "min": 0.45874637365341187,
+          "max": 0.9265091791749,
+          "mean": 0.7186556622661926,
+          "std": 0.1414164984781756,
+          "p10": 0.49987379312515257,
+          "p50": 0.7214030772447586,
+          "p90": 0.8916634798049927
+        },
+        "harmonicity": {
+          "min": 6.352333068847656,
+          "max": 3308.99853515625,
+          "mean": 474.4573106147625,
+          "std": 756.4279828148517,
+          "p10": 10.778605747222901,
+          "p50": 47.67156982421875,
+          "p90": 1816.0990478515628
+        },
+        "dominant_mod_hz": {
+          "min": 0.5,
+          "max": 11.5,
+          "mean": 1.9814814814814814,
+          "std": 2.580128770406487,
+          "p10": 0.5,
+          "p50": 0.5,
+          "p90": 5.350000000000001
+        },
+        "inter_event_interval_s": {
+          "min": 0.06059375,
+          "max": 0.07621875,
+          "mean": 0.06613252314814815,
+          "std": 0.0033345534615085446,
+          "p10": 0.06208125,
+          "p50": 0.066359375,
+          "p90": 0.06985000000000001
+        },
+        "transient_density": {
+          "min": 10.65,
+          "max": 15.4,
+          "mean": 14.373148148148143,
+          "std": 0.7478186155451264,
+          "p10": 13.8,
+          "p50": 14.4,
+          "p90": 15.2
+        },
+        "roughness": {
+          "min": 1.4974911147805303e-06,
+          "max": 0.0045367230347428105,
+          "mean": 0.0005635159527829579,
+          "std": 0.0007766715116871759,
+          "p10": 4.032447178748882e-06,
+          "p50": 0.000367884011397548,
+          "p90": 0.0010053229876734418
+        },
+        "envelope_std": {
+          "min": 0.010680761188268661,
+          "max": 0.16840605437755585,
+          "mean": 0.06633138166809524,
+          "std": 0.044981437540775285,
+          "p10": 0.023019465617835525,
+          "p50": 0.057087479159235954,
+          "p90": 0.14760042428970338
+        },
+        "duration_s": {
+          "min": 5.0,
+          "max": 20.0,
+          "mean": 7.5,
+          "std": 5.5901699437494745,
+          "p10": 5.0,
+          "p50": 5.0,
+          "p90": 20.0
+        }
+      },
+      "derived_parameters": {
+        "dominant_band_hz": {
+          "low": 20.0,
+          "mid": 55.0,
+          "high": 350.4
+        },
+        "bandwidth_tendency_hz": {
+          "median": 1635.725,
+          "upper": 2252.508
+        },
+        "tonality_tendency": {
+          "spectral_flatness_median": 0.278597,
+          "narrowband_index_median": 0.721403
+        },
+        "event_cadence_s": {
+          "median": 1.0617,
+          "fast": 0.6901,
+          "slow": 1.6988
+        },
+        "modulation_hz": {
+          "median": 0.5,
+          "low": 0.5,
+          "high": 5.35
+        },
+        "variability_knobs": {
+          "frequency_jitter_pct": 0.45,
+          "modulation_jitter_pct": 0.75,
+          "timing_jitter_pct": 0.12,
+          "roughness_jitter_pct": 0.2
+        }
+      },
+      "seed_exemplars": [
+        {
+          "role": "representative",
+          "sample_id": "hf_shipsear_058fdf1c068b",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_221_058fdf1c068b.wav"
+        },
+        {
+          "role": "outlier_texture",
+          "sample_id": "hf_shipsear_e7577e1efece",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_108_e7577e1efece.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_6c0176d8030a",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_19_6c0176d8030a.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_d8007d4068cb",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_21_d8007d4068cb.wav"
+        }
+      ]
+    },
+    "marine_mammal_whale": {
+      "family": "marine_mammal_whale",
+      "synthesis_mode": "hybrid",
+      "acoustic_contract_hook": "contacts.biologic_large",
+      "default_duration_s": 7.5,
+      "seed_mix": 0.12,
+      "analysis_basis": {
+        "sample_count": 73,
+        "source_categories": [
+          "marine_mammal_whale"
+        ],
+        "safe_archetype_filter": null,
+        "source_counts": {
+          "hf_wmms_parquet": 73
+        },
+        "label_quality_counts": {
+          "exact": 73
+        }
+      },
+      "feature_ranges": {
+        "dominant_freq_hz": {
+          "min": 18.75,
+          "max": 40000.0,
+          "mean": 1477.765678510274,
+          "std": 4813.825331737551,
+          "p10": 19.625,
+          "p50": 210.0,
+          "p90": 3570.812499999999
+        },
+        "spectral_centroid_hz": {
+          "min": 52.36783875213159,
+          "max": 43323.75117231345,
+          "mean": 2618.9495067560174,
+          "std": 5233.028990268576,
+          "p10": 126.25808498107013,
+          "p50": 981.9341866893519,
+          "p90": 6063.732608596056
+        },
+        "spectral_bandwidth_hz": {
+          "min": 41.40459218802204,
+          "max": 22178.849011290757,
+          "mean": 2183.5578341771584,
+          "std": 2963.9718125639174,
+          "p10": 170.39151705476033,
+          "p50": 1253.6842960016147,
+          "p90": 4328.18051929456
+        },
+        "spectral_rolloff_hz": {
+          "min": 71.2,
+          "max": 64722.68625960307,
+          "mean": 4457.372616257209,
+          "std": 8042.09066477114,
+          "p10": 147.2495415216778,
+          "p50": 1686.2476145038167,
+          "p90": 9752.861456671983
+        },
+        "spectral_flatness": {
+          "min": 0.0015495693078264594,
+          "max": 0.2508615553379059,
+          "mean": 0.06114532244838264,
+          "std": 0.05997085042637257,
+          "p10": 0.002836524276062846,
+          "p50": 0.03836704418063164,
+          "p90": 0.1379635065793991
+        },
+        "narrowband_index": {
+          "min": 0.7491384446620941,
+          "max": 0.9984504306921735,
+          "mean": 0.9388546775516173,
+          "std": 0.05997085042637257,
+          "p10": 0.8620364934206008,
+          "p50": 0.9616329558193684,
+          "p90": 0.9971634757239372
+        },
+        "harmonicity": {
+          "min": 7.518256187438965,
+          "max": 495576.53125,
+          "mean": 30540.317098304018,
+          "std": 79094.94508456382,
+          "p10": 86.60180053710938,
+          "p50": 2652.666015625,
+          "p90": 74954.615625
+        },
+        "dominant_mod_hz": {
+          "min": 0.5,
+          "max": 15.0,
+          "mean": 1.852523561538851,
+          "std": 2.8927362338340625,
+          "p10": 0.5,
+          "p50": 0.704070407040704,
+          "p90": 4.2291841826725545
+        },
+        "inter_event_interval_s": {
+          "min": 0.05234375,
+          "max": 0.08992919921875,
+          "mean": 0.0667685913868241,
+          "std": 0.0073140407559586585,
+          "p10": 0.059256796875,
+          "p50": 0.06547854785478548,
+          "p90": 0.07666666666666666
+        },
+        "transient_density": {
+          "min": 1.4970760233918128,
+          "max": 17.899303929831134,
+          "mean": 12.084999584399416,
+          "std": 3.3883908374763116,
+          "p10": 7.807915070387254,
+          "p50": 13.0,
+          "p90": 15.579162319437382
+        },
+        "roughness": {
+          "min": 0.0004573865072668055,
+          "max": 0.03805611742477791,
+          "mean": 0.007931341274834426,
+          "std": 0.008314362693024229,
+          "p10": 0.0012151800178801424,
+          "p50": 0.0048723207838952546,
+          "p90": 0.01671637595789418
+        },
+        "envelope_std": {
+          "min": 0.02112482488155365,
+          "max": 0.2580817639827728,
+          "mean": 0.12337325765968185,
+          "std": 0.05070013305634221,
+          "p10": 0.045867408066988,
+          "p50": 0.13725712895393372,
+          "p90": 0.18113171160221098
+        },
+        "duration_s": {
+          "min": 0.193225,
+          "max": 20.0,
+          "mean": 5.5519393013698615,
+          "std": 6.519864926385697,
+          "p10": 0.7284374,
+          "p50": 2.524414,
+          "p90": 20.0
+        }
+      },
+      "derived_parameters": {
+        "dominant_band_hz": {
+          "low": 20.0,
+          "mid": 210.0,
+          "high": 4284.975
+        },
+        "bandwidth_tendency_hz": {
+          "median": 1253.684,
+          "upper": 4328.181
+        },
+        "tonality_tendency": {
+          "spectral_flatness_median": 0.038367,
+          "narrowband_index_median": 0.961633
+        },
+        "event_cadence_s": {
+          "median": 0.6548,
+          "fast": 0.4256,
+          "slow": 1.0477
+        },
+        "modulation_hz": {
+          "median": 0.7041,
+          "low": 0.5,
+          "high": 4.2292
+        },
+        "variability_knobs": {
+          "frequency_jitter_pct": 0.45,
+          "modulation_jitter_pct": 0.75,
+          "timing_jitter_pct": 0.12,
+          "roughness_jitter_pct": 0.2
+        }
+      },
+      "seed_exemplars": [
+        {
+          "role": "representative",
+          "sample_id": "hf_wmms_parquet_fba5c95883a6",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/long_finned_pilot_whale/77028015_fba5c95883a6.wav"
+        },
+        {
+          "role": "outlier_texture",
+          "sample_id": "hf_wmms_parquet_25437d74dcfc",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/humpback_whale/6304300n_25437d74dcfc.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_wmms_parquet_223746d520cf",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/fin_finback_whale/61039001_223746d520cf.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_wmms_parquet_ca3010786616",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/short_finned_pacific_pilot_whale/91005015_ca3010786616.wav"
+        }
+      ]
+    },
+    "marine_mammal_other": {
+      "family": "marine_mammal_other",
+      "synthesis_mode": "hybrid",
+      "acoustic_contract_hook": "contacts.biologic_other",
+      "default_duration_s": 6.0,
+      "seed_mix": 0.1,
+      "analysis_basis": {
+        "sample_count": 113,
+        "source_categories": [
+          "marine_mammal_other"
+        ],
+        "safe_archetype_filter": null,
+        "source_counts": {
+          "hf_wmms_parquet": 113
+        },
+        "label_quality_counts": {
+          "exact": 113
+        }
+      },
+      "feature_ranges": {
+        "dominant_freq_hz": {
+          "min": 20.0,
+          "max": 31480.0,
+          "mean": 4485.143200359514,
+          "std": 7173.112092796173,
+          "p10": 39.0625,
+          "p50": 330.0,
+          "p90": 12928.0
+        },
+        "spectral_centroid_hz": {
+          "min": 248.88898931718515,
+          "max": 17935.77562009381,
+          "mean": 6141.013535043432,
+          "std": 4154.243085616678,
+          "p10": 538.4733329229483,
+          "p50": 5640.468013424624,
+          "p90": 11321.329044909819
+        },
+        "spectral_bandwidth_hz": {
+          "min": 138.91916511227845,
+          "max": 14596.11923941702,
+          "mean": 4909.267639877935,
+          "std": 3089.18867666501,
+          "p10": 743.89582320548,
+          "p50": 4875.207188988321,
+          "p90": 8195.462937531469
+        },
+        "spectral_rolloff_hz": {
+          "min": 252.72727272727272,
+          "max": 31762.754541412603,
+          "mean": 10299.418827430763,
+          "std": 7168.684928799736,
+          "p10": 852.732556536128,
+          "p50": 10586.73148777174,
+          "p90": 18856.36944901316
+        },
+        "spectral_flatness": {
+          "min": 0.0024957871064543724,
+          "max": 0.2803293466567993,
+          "mean": 0.06720699563177418,
+          "std": 0.055018337018398124,
+          "p10": 0.011884248256683352,
+          "p50": 0.058550357818603516,
+          "p90": 0.12957309782505033
+        },
+        "narrowband_index": {
+          "min": 0.7196706533432007,
+          "max": 0.9975042128935456,
+          "mean": 0.9327930043682259,
+          "std": 0.05501833701839813,
+          "p10": 0.8704269021749496,
+          "p50": 0.9414496421813965,
+          "p90": 0.9881157517433166
+        },
+        "harmonicity": {
+          "min": 11.618468284606934,
+          "max": 740695.8125,
+          "mean": 11941.239495446196,
+          "std": 72104.29245691204,
+          "p10": 58.216825866699224,
+          "p50": 701.4305419921875,
+          "p90": 8951.061328124997
+        },
+        "dominant_mod_hz": {
+          "min": 0.5,
+          "max": 15.414374205008166,
+          "mean": 2.16200592251738,
+          "std": 2.8898666550712715,
+          "p10": 0.5,
+          "p50": 1.0,
+          "p90": 4.69948051104841
+        },
+        "inter_event_interval_s": {
+          "min": 0.05302734375,
+          "max": 0.08279111644657863,
+          "mean": 0.06550650806952853,
+          "std": 0.006002462610867858,
+          "p10": 0.0578662109375,
+          "p50": 0.0650625,
+          "p90": 0.073719375
+        },
+        "transient_density": {
+          "min": 3.295218637756615,
+          "max": 18.336088154269973,
+          "mean": 14.275843066073257,
+          "std": 2.304206252534269,
+          "p10": 11.28595795719297,
+          "p50": 14.809917355371901,
+          "p90": 16.210311895539206
+        },
+        "roughness": {
+          "min": 0.0001161978979331125,
+          "max": 0.04661826960668601,
+          "mean": 0.006151885619959726,
+          "std": 0.007826846017798185,
+          "p10": 0.0006848275215684069,
+          "p50": 0.0042290979789999334,
+          "p90": 0.012131309742329496
+        },
+        "envelope_std": {
+          "min": 0.026057252660393715,
+          "max": 0.26895418763160706,
+          "mean": 0.10264305931936323,
+          "std": 0.04648645957265701,
+          "p10": 0.049146012961864466,
+          "p50": 0.10517039895057678,
+          "p90": 0.1609889805316925
+        },
+        "duration_s": {
+          "min": 0.220699,
+          "max": 20.0,
+          "mean": 2.2576185309734513,
+          "std": 3.16743202217753,
+          "p10": 0.7080464,
+          "p50": 1.417969,
+          "p90": 3.781238
+        }
+      },
+      "derived_parameters": {
+        "dominant_band_hz": {
+          "low": 31.25,
+          "mid": 330.0,
+          "high": 15513.6
+        },
+        "bandwidth_tendency_hz": {
+          "median": 4875.207,
+          "upper": 8195.463
+        },
+        "tonality_tendency": {
+          "spectral_flatness_median": 0.05855,
+          "narrowband_index_median": 0.94145
+        },
+        "event_cadence_s": {
+          "median": 0.6506,
+          "fast": 0.4229,
+          "slow": 1.041
+        },
+        "modulation_hz": {
+          "median": 1.0,
+          "low": 0.5,
+          "high": 4.6995
+        },
+        "variability_knobs": {
+          "frequency_jitter_pct": 0.45,
+          "modulation_jitter_pct": 0.75,
+          "timing_jitter_pct": 0.12,
+          "roughness_jitter_pct": 0.2
+        }
+      },
+      "seed_exemplars": [
+        {
+          "role": "representative",
+          "sample_id": "hf_wmms_parquet_447a6b9d5510",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/atlantic_spotted_dolphin/6102603i_447a6b9d5510.wav"
+        },
+        {
+          "role": "outlier_texture",
+          "sample_id": "hf_wmms_parquet_7bb21d6ae784",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/white_beaked_dolphin/5903700j_7bb21d6ae784.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_wmms_parquet_0532ae759abe",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/grampus_rissos_dolphin/8500900t_0532ae759abe.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_wmms_parquet_24d1ae8cd058",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/atlantic_spotted_dolphin/6102500o_24d1ae8cd058.wav"
+        }
+      ]
+    },
+    "surface_vessel": {
+      "family": "surface_vessel",
+      "synthesis_mode": "hybrid",
+      "acoustic_contract_hook": "contacts.surface_vessel",
+      "default_duration_s": 8.0,
+      "seed_mix": 0.15,
+      "analysis_basis": {
+        "sample_count": 180,
+        "source_categories": [
+          "surface_vessel"
+        ],
+        "safe_archetype_filter": null,
+        "source_counts": {
+          "hf_shipsear": 180
+        },
+        "label_quality_counts": {
+          "coarse": 180
+        }
+      },
+      "feature_ranges": {
+        "dominant_freq_hz": {
+          "min": 20.0,
+          "max": 2010.0,
+          "mean": 255.88888888888889,
+          "std": 309.5081921171948,
+          "p10": 20.0,
+          "p50": 175.0,
+          "p90": 553.9999999999998
+        },
+        "spectral_centroid_hz": {
+          "min": 200.36208974972274,
+          "max": 2960.137653290139,
+          "mean": 1029.0504194700895,
+          "std": 625.9441849352511,
+          "p10": 342.92180578773804,
+          "p50": 868.680078694752,
+          "p90": 1905.422748758898
+        },
+        "spectral_bandwidth_hz": {
+          "min": 273.7930920318457,
+          "max": 2178.947798185355,
+          "mean": 1153.4973953154947,
+          "std": 509.51814065221544,
+          "p10": 487.27049196220133,
+          "p50": 1077.6586952633647,
+          "p90": 1866.4921631708655
+        },
+        "spectral_rolloff_hz": {
+          "min": 204.64646464646464,
+          "max": 5067.474747474747,
+          "mean": 1940.9691358024684,
+          "std": 1360.8582253201935,
+          "p10": 420.82828282828285,
+          "p50": 1595.7070707070707,
+          "p90": 4125.767676767676
+        },
+        "spectral_flatness": {
+          "min": 0.0044786278158426285,
+          "max": 0.28360021114349365,
+          "mean": 0.0991165654035285,
+          "std": 0.07322486849856238,
+          "p10": 0.016558304801583292,
+          "p50": 0.090150136500597,
+          "p90": 0.2079996764659881
+        },
+        "narrowband_index": {
+          "min": 0.7163997888565063,
+          "max": 0.9955213721841574,
+          "mean": 0.9008834345964715,
+          "std": 0.07322486849856238,
+          "p10": 0.7920003235340118,
+          "p50": 0.909849863499403,
+          "p90": 0.9834416951984167
+        },
+        "harmonicity": {
+          "min": 7.669881820678711,
+          "max": 22596.9765625,
+          "mean": 1750.1276037746006,
+          "std": 3460.2819650683546,
+          "p10": 66.37879791259766,
+          "p50": 534.8428344726562,
+          "p90": 4972.364355468748
+        },
+        "dominant_mod_hz": {
+          "min": 0.5,
+          "max": 20.0,
+          "mean": 5.591666666666667,
+          "std": 5.817472484774734,
+          "p10": 0.5,
+          "p50": 2.5,
+          "p90": 14.549999999999997
+        },
+        "inter_event_interval_s": {
+          "min": 0.0521875,
+          "max": 0.08084374999999999,
+          "mean": 0.06510920138888888,
+          "std": 0.004404057148914039,
+          "p10": 0.0607375,
+          "p50": 0.064546875,
+          "p90": 0.069990625
+        },
+        "transient_density": {
+          "min": 8.8,
+          "max": 16.6,
+          "mean": 14.61444444444444,
+          "std": 0.9621805225760348,
+          "p10": 13.8,
+          "p50": 14.8,
+          "p90": 15.42
+        },
+        "roughness": {
+          "min": 0.00012122044236725284,
+          "max": 0.02406861961114671,
+          "mean": 0.004543932563148623,
+          "std": 0.004751173238808593,
+          "p10": 0.0005438598501125944,
+          "p50": 0.003241462285959262,
+          "p90": 0.00996588640777134
+        },
+        "envelope_std": {
+          "min": 0.01167730800807476,
+          "max": 0.151250422000885,
+          "mean": 0.09448390790882209,
+          "std": 0.0373362245243975,
+          "p10": 0.03647890612483025,
+          "p50": 0.10115864872932434,
+          "p90": 0.13734980076551437
+        },
+        "duration_s": {
+          "min": 5.0,
+          "max": 5.0,
+          "mean": 5.0,
+          "std": 0.0,
+          "p10": 5.0,
+          "p50": 5.0,
+          "p90": 5.0
+        }
+      },
+      "derived_parameters": {
+        "dominant_band_hz": {
+          "low": 20.0,
+          "mid": 175.0,
+          "high": 664.8
+        },
+        "bandwidth_tendency_hz": {
+          "median": 1077.659,
+          "upper": 1866.492
+        },
+        "tonality_tendency": {
+          "spectral_flatness_median": 0.09015,
+          "narrowband_index_median": 0.90985
+        },
+        "event_cadence_s": {
+          "median": 0.3873,
+          "fast": 0.2517,
+          "slow": 0.6197
+        },
+        "modulation_hz": {
+          "median": 2.5,
+          "low": 0.5,
+          "high": 14.55
+        },
+        "variability_knobs": {
+          "frequency_jitter_pct": 0.45,
+          "modulation_jitter_pct": 0.75,
+          "timing_jitter_pct": 0.12,
+          "roughness_jitter_pct": 0.2
+        }
+      },
+      "seed_exemplars": [
+        {
+          "role": "representative",
+          "sample_id": "hf_shipsear_ee3c5ac14002",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_2/2_0_115_ee3c5ac14002.wav"
+        },
+        {
+          "role": "outlier_texture",
+          "sample_id": "hf_shipsear_804ea196b3f0",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_3/3_0_155_804ea196b3f0.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_c2a15c665f4e",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_0/0_0_18_c2a15c665f4e.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_b8da4dd1f139",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_1/1_0_47_b8da4dd1f139.wav"
+        }
+      ]
+    },
+    "intermittent_machinery_archetype": {
+      "family": "intermittent_machinery_archetype",
+      "synthesis_mode": "procedural",
+      "acoustic_contract_hook": "contacts.unknown_contact_like",
+      "default_duration_s": 8.0,
+      "seed_mix": 0.06,
+      "analysis_basis": {
+        "sample_count": 180,
+        "source_categories": [
+          "surface_vessel"
+        ],
+        "safe_archetype_filter": "intermittent_machinery_archetype",
+        "source_counts": {
+          "hf_shipsear": 180
+        },
+        "label_quality_counts": {
+          "coarse": 180
+        }
+      },
+      "feature_ranges": {
+        "dominant_freq_hz": {
+          "min": 20.0,
+          "max": 2010.0,
+          "mean": 255.88888888888889,
+          "std": 309.5081921171948,
+          "p10": 20.0,
+          "p50": 175.0,
+          "p90": 553.9999999999998
+        },
+        "spectral_centroid_hz": {
+          "min": 200.36208974972274,
+          "max": 2960.137653290139,
+          "mean": 1029.0504194700895,
+          "std": 625.9441849352511,
+          "p10": 342.92180578773804,
+          "p50": 868.680078694752,
+          "p90": 1905.422748758898
+        },
+        "spectral_bandwidth_hz": {
+          "min": 273.7930920318457,
+          "max": 2178.947798185355,
+          "mean": 1153.4973953154947,
+          "std": 509.51814065221544,
+          "p10": 487.27049196220133,
+          "p50": 1077.6586952633647,
+          "p90": 1866.4921631708655
+        },
+        "spectral_rolloff_hz": {
+          "min": 204.64646464646464,
+          "max": 5067.474747474747,
+          "mean": 1940.9691358024684,
+          "std": 1360.8582253201935,
+          "p10": 420.82828282828285,
+          "p50": 1595.7070707070707,
+          "p90": 4125.767676767676
+        },
+        "spectral_flatness": {
+          "min": 0.0044786278158426285,
+          "max": 0.28360021114349365,
+          "mean": 0.0991165654035285,
+          "std": 0.07322486849856238,
+          "p10": 0.016558304801583292,
+          "p50": 0.090150136500597,
+          "p90": 0.2079996764659881
+        },
+        "narrowband_index": {
+          "min": 0.7163997888565063,
+          "max": 0.9955213721841574,
+          "mean": 0.9008834345964715,
+          "std": 0.07322486849856238,
+          "p10": 0.7920003235340118,
+          "p50": 0.909849863499403,
+          "p90": 0.9834416951984167
+        },
+        "harmonicity": {
+          "min": 7.669881820678711,
+          "max": 22596.9765625,
+          "mean": 1750.1276037746006,
+          "std": 3460.2819650683546,
+          "p10": 66.37879791259766,
+          "p50": 534.8428344726562,
+          "p90": 4972.364355468748
+        },
+        "dominant_mod_hz": {
+          "min": 0.5,
+          "max": 20.0,
+          "mean": 5.591666666666667,
+          "std": 5.817472484774734,
+          "p10": 0.5,
+          "p50": 2.5,
+          "p90": 14.549999999999997
+        },
+        "inter_event_interval_s": {
+          "min": 0.0521875,
+          "max": 0.08084374999999999,
+          "mean": 0.06510920138888888,
+          "std": 0.004404057148914039,
+          "p10": 0.0607375,
+          "p50": 0.064546875,
+          "p90": 0.069990625
+        },
+        "transient_density": {
+          "min": 8.8,
+          "max": 16.6,
+          "mean": 14.61444444444444,
+          "std": 0.9621805225760348,
+          "p10": 13.8,
+          "p50": 14.8,
+          "p90": 15.42
+        },
+        "roughness": {
+          "min": 0.00012122044236725284,
+          "max": 0.02406861961114671,
+          "mean": 0.004543932563148623,
+          "std": 0.004751173238808593,
+          "p10": 0.0005438598501125944,
+          "p50": 0.003241462285959262,
+          "p90": 0.00996588640777134
+        },
+        "envelope_std": {
+          "min": 0.01167730800807476,
+          "max": 0.151250422000885,
+          "mean": 0.09448390790882209,
+          "std": 0.0373362245243975,
+          "p10": 0.03647890612483025,
+          "p50": 0.10115864872932434,
+          "p90": 0.13734980076551437
+        },
+        "duration_s": {
+          "min": 5.0,
+          "max": 5.0,
+          "mean": 5.0,
+          "std": 0.0,
+          "p10": 5.0,
+          "p50": 5.0,
+          "p90": 5.0
+        }
+      },
+      "derived_parameters": {
+        "dominant_band_hz": {
+          "low": 20.0,
+          "mid": 175.0,
+          "high": 664.8
+        },
+        "bandwidth_tendency_hz": {
+          "median": 1077.659,
+          "upper": 1866.492
+        },
+        "tonality_tendency": {
+          "spectral_flatness_median": 0.09015,
+          "narrowband_index_median": 0.90985
+        },
+        "event_cadence_s": {
+          "median": 1.1618,
+          "fast": 0.7552,
+          "slow": 1.859
+        },
+        "modulation_hz": {
+          "median": 2.5,
+          "low": 0.5,
+          "high": 14.55
+        },
+        "variability_knobs": {
+          "frequency_jitter_pct": 0.45,
+          "modulation_jitter_pct": 0.75,
+          "timing_jitter_pct": 0.18,
+          "roughness_jitter_pct": 0.2
+        }
+      },
+      "seed_exemplars": [
+        {
+          "role": "representative",
+          "sample_id": "hf_shipsear_ee3c5ac14002",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_2/2_0_115_ee3c5ac14002.wav"
+        },
+        {
+          "role": "outlier_texture",
+          "sample_id": "hf_shipsear_804ea196b3f0",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_3/3_0_155_804ea196b3f0.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_c2a15c665f4e",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_0/0_0_18_c2a15c665f4e.wav"
+        },
+        {
+          "role": "auto_candidate",
+          "sample_id": "hf_shipsear_b8da4dd1f139",
+          "file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_1/1_0_47_b8da4dd1f139.wav"
+        }
+      ]
+    }
+  },
+  "coverage_snapshot": {
+    "marine_mammal_whale": {
+      "primary_count": 73,
+      "inclusive_count": 87,
+      "coverage_status": "well_covered"
+    },
+    "marine_mammal_orca": {
+      "primary_count": 14,
+      "inclusive_count": 14,
+      "coverage_status": "thin"
+    },
+    "marine_mammal_other": {
+      "primary_count": 113,
+      "inclusive_count": 113,
+      "coverage_status": "well_covered"
+    },
+    "marine_life_other": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "surface_vessel": {
+      "primary_count": 180,
+      "inclusive_count": 180,
+      "coverage_status": "well_covered"
+    },
+    "ambient_soundscape": {
+      "primary_count": 54,
+      "inclusive_count": 54,
+      "coverage_status": "well_covered"
+    },
+    "weather_geophony": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "anthropogenic_non_vessel": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "machinery_noise": {
+      "primary_count": 0,
+      "inclusive_count": 180,
+      "coverage_status": "well_covered"
+    },
+    "unknown_contact_like": {
+      "primary_count": 0,
+      "inclusive_count": 9,
+      "coverage_status": "thin"
+    },
+    "submarine_like_archetype_inspiration": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    }
+  }
+}

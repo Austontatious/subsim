@@ -1,0 +1,131 @@
+{
+  "run_all_utc": "2026-04-24T00:36:08+00:00",
+  "pull": {
+    "pipeline_stage": "pull",
+    "generated_utc": "2026-04-24T00:35:55+00:00",
+    "manifest_path": "/mnt/data/subsim/dataset/hydrophone/hydrophone_sources_manifest.json",
+    "pull_records_path": "/mnt/data/subsim/dataset/hydrophone/staging/pulled_samples.jsonl",
+    "source_status": [
+      {
+        "source_id": "hf_wmms_parquet",
+        "name": "Watkins Marine Mammal Sound (WMMS) parquet mirror",
+        "adapter": "hf_parquet_audio_bytes",
+        "pull_mode": "subset_pull",
+        "status": "ok",
+        "error": "",
+        "pulled_count": 200,
+        "elapsed_s": 1.167,
+        "metadata_only": false
+      },
+      {
+        "source_id": "hf_shipsear",
+        "name": "ShipsEar underwater ship-radiated noise",
+        "adapter": "hf_zip_class_dirs",
+        "pull_mode": "subset_pull",
+        "status": "ok",
+        "error": "",
+        "pulled_count": 225,
+        "elapsed_s": 0.783,
+        "metadata_only": false
+      },
+      {
+        "source_id": "mbari_pacific_sound_2khz",
+        "name": "MBARI Pacific Sound 2kHz hydrophone archive",
+        "adapter": "http_wav_range_extract",
+        "pull_mode": "subset_pull",
+        "status": "ok",
+        "error": "",
+        "pulled_count": 9,
+        "elapsed_s": 2.859,
+        "metadata_only": false
+      },
+      {
+        "source_id": "dclde_reference",
+        "name": "DCLDE workshop challenge datasets",
+        "adapter": "metadata_only",
+        "pull_mode": "metadata_only",
+        "status": "ok",
+        "error": "",
+        "pulled_count": 0,
+        "elapsed_s": 0.0,
+        "metadata_only": true
+      },
+      {
+        "source_id": "noaa_passive_acoustics_reference",
+        "name": "NOAA passive acoustic archives",
+        "adapter": "metadata_only",
+        "pull_mode": "metadata_only",
+        "status": "ok",
+        "error": "",
+        "pulled_count": 0,
+        "elapsed_s": 0.0,
+        "metadata_only": true
+      }
+    ],
+    "pulled_total": 434
+  },
+  "normalize": {
+    "pipeline_stage": "normalize",
+    "generated_utc": "2026-04-24T00:35:55+00:00",
+    "input_pull_records": 434,
+    "normalized_records": 434,
+    "skipped_missing_files": 0,
+    "category_counts": {
+      "ambient_soundscape": 54,
+      "marine_mammal_orca": 14,
+      "marine_mammal_other": 113,
+      "marine_mammal_whale": 73,
+      "surface_vessel": 180
+    },
+    "index_path": "/mnt/data/subsim/dataset/hydrophone/hydrophone_dataset_index.jsonl"
+  },
+  "features": {
+    "pipeline_stage": "features",
+    "generated_utc": "2026-04-24T00:36:07+00:00",
+    "input_rows": 434,
+    "feature_rows": 434,
+    "failure_rows": 0,
+    "features_csv_path": "/mnt/data/subsim/dataset/hydrophone/features/hydrophone_features.csv",
+    "features_jsonl_path": "/mnt/data/subsim/dataset/hydrophone/features/hydrophone_features.jsonl"
+  },
+  "analysis": {
+    "sample_count": 434,
+    "cluster_count": 8
+  },
+  "report": {
+    "pipeline_stage": "report",
+    "generated_utc": "2026-04-24T00:36:08+00:00",
+    "analysis_json_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_category_analysis_report.json",
+    "analysis_md_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_category_analysis_report.md",
+    "gap_json_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_dataset_gap_report.json",
+    "gap_md_path": "/mnt/data/subsim/dataset/hydrophone/reports/hydrophone_dataset_gap_report.md",
+    "sample_count": 434,
+    "covered_categories": [
+      "marine_mammal_whale",
+      "marine_mammal_orca",
+      "marine_mammal_other",
+      "surface_vessel",
+      "ambient_soundscape",
+      "machinery_noise",
+      "unknown_contact_like"
+    ]
+  },
+  "validate": {
+    "generated_utc": "2026-04-24T00:36:08+00:00",
+    "checks": {
+      "manifest_exists": true,
+      "taxonomy_exists": true,
+      "pull_records_exists": true,
+      "index_exists": true,
+      "features_csv_exists": true,
+      "analysis_json_exists": true,
+      "analysis_md_exists": true,
+      "gap_json_exists": true,
+      "gap_md_exists": true
+    },
+    "missing_checks": [],
+    "index_rows": 434,
+    "feature_rows": 434,
+    "category_count": 5
+  }
+}

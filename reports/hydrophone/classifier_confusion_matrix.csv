@@ -1,0 +1,5 @@
+actual\predicted,ambient_ocean,biologic_fish,biologic_mammal,surface_vessel
+ambient_ocean,6,6,0,1
+biologic_fish,1,6,0,0
+biologic_mammal,0,0,4,0
+surface_vessel,0,0,0,4

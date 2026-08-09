@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/gridlines.gd" id=6]
 
 [sub_resource type="StandardMaterial3D" id=1]
-albedo_color = Color(0.2, 0.4, 0.6, 0.15)
+albedo_color = Color(0.2, 0.4, 0.6, 0.06)
 transparency = 1
 cull_mode = 2
 

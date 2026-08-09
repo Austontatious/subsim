@@ -1,0 +1,138 @@
+{
+  "report_version": "acoustic_substrate_completion.v1",
+  "date": "2026-04-23",
+  "contract_schema_version": "acoustic-substrate.v1",
+  "status": "complete_with_known_gaps",
+  "objective": "Subsim Acoustic Substrate Completion v1",
+  "answers": {
+    "audio_generation_happening": {
+      "status": "yes",
+      "details": [
+        "Desktop sim emits passive contact mix and event cues via subsim/game.py and subsim/audio.py.",
+        "Game.build_observation() exposes acoustic.schema_version, acoustic.foundation, and acoustic.contacts."
+      ],
+      "runtime_probe": {
+        "schema_version": "acoustic-substrate.v1",
+        "contacts_total_after_probe_ticks": 3,
+        "acoustic_contacts_after_probe_ticks": 3,
+        "foundation_changed_over_time": true
+      }
+    },
+    "android_playback_broken_specifically": {
+      "status": "addressed",
+      "details": [
+        "Historically silent due to missing Godot playback implementation.",
+        "Godot now has AcousticMixer playback nodes and signal wiring.",
+        "Engine now emits sfx_return in addition to mix_contact, sfx_ping, and sfx_fire."
+      ],
+      "apk_artifact": {
+        "path": "godot/build/subsim-android.apk",
+        "size_bytes": 28390598,
+        "sha256": "f22f25110371a83704c423c2b538abcba50dc4a3304d50d5157b8cf21b7f69fb",
+        "rebuilt_at_local": "2026-04-23 14:55:01 -0700"
+      }
+    },
+    "game_logic_emitting_right_sound_cues": {
+      "status": "partially_yes_improved",
+      "implemented": [
+        "Foundational channels: ambient, self-noise, player-hum.",
+        "Passive contact loop rendering with variant selection (clean/lp1/lp2/lp3).",
+        "Desktop contact-loop lifecycle cleanup for stale/removed contacts.",
+        "Godot contact variant selection now uses contract inputs (confidence + own-noise + inferred occlusion) instead of gain-only buckets.",
+        "Ping/fire/return cue families in Godot frontend.",
+        "Event/cue taxonomy documented in canonical contract."
+      ],
+      "still_thin": [
+        "Contact classes remain coarse.",
+        "Ambient diversity limited.",
+        "Many cues are procedural placeholders.",
+        "No full clutter/biologics redesign in this pass."
+      ]
+    },
+    "rl_playtester_consumes_intended_signal": {
+      "status": "yes_abstract_state",
+      "details": [
+        "RL/playtester consumes abstract acoustic state, not waveform buffers.",
+        "Observation acoustic envelope is contract-aligned.",
+        "Sonar console ownship context now uses shared foundation semantics."
+      ]
+    }
+  },
+  "implemented_artifacts": {
+    "contract": [
+      "subsim/acoustic_contract.py",
+      "docs/ACOUSTIC_CONTRACT.md"
+    ],
+    "desktop": [
+      "subsim/audio.py",
+      "subsim/game.py",
+      "subsim/config.py",
+      "subsim/assets.py"
+    ],
+    "godot_apk": [
+      "godot/scripts/audio/acoustic_mixer.gd",
+      "godot/scripts/engine_port/engine.gd",
+      "godot/main/Main.tscn",
+      "scripts/sync_godot_audio_assets.sh",
+      "godot/audio/sfx/"
+    ],
+    "rl_playtester_alignment": [
+      "subsim/testing/sonar_console/console.py"
+    ],
+    "tests": [
+      "tests/test_acoustic_contract.py",
+      "tests/test_acoustic_contract_docs_sync.py",
+      "tests/test_game_acoustic_observation.py",
+      "tests/test_godot_acoustic_wiring.py",
+      "subsim/testing/sonar_console/tests/test_console_integration.py"
+    ],
+    "docs_and_decisions": [
+      "docs/ACOUSTIC_ASSET_GAP_REPORT.md",
+      "docs/decisions/2026-04-23-acoustic-substrate-contract-and-playback.md",
+      "README.md",
+      "RUNBOOK.md",
+      "QA_RUNBOOK.md",
+      "ARCHITECTURE_CHECKPOINT.md",
+      "PROJECT_MEMORY.md"
+    ]
+  },
+  "validation": {
+    "automated": [
+      {
+        "command": ".venv/bin/python -m pytest -q",
+        "result": "38 passed in 24.83s"
+      },
+      {
+        "command": "Godot headless export debug APK",
+        "result": "success"
+      },
+      {
+        "command": "wiring checks via rg for AcousticMixer and emitted signals",
+        "result": "present"
+      },
+      {
+        "command": ".venv/bin/python -m pytest -q tests/test_godot_acoustic_wiring.py tests/test_acoustic_contract_docs_sync.py",
+        "result": "5 passed in 0.44s"
+      }
+    ],
+    "manual_required": [
+      "Install APK to handset and verify audible ambient bed, passive loops, ping/fire/return cues.",
+      "Confirm Android device routing/volume path is non-muted for speaker/headphones."
+    ],
+    "limitations": [
+      "CI/headless checks cannot prove handset audibility.",
+      "Godot frontend uses simplified engine path relative to desktop sim."
+    ]
+  },
+  "known_gaps": [
+    "Desktop has richer event taxonomy than current Godot stub parity.",
+    "Godot frontend infers coarse occlusion because engine stub does not emit explicit occlusion layers.",
+    "No waveform-level RL policy input in this pass.",
+    "Asset library remains mostly procedural placeholders."
+  ],
+  "recommended_follow_on": [
+    "Add ambient biome diversity and propulsion regime layering.",
+    "Expand contact signature subclasses and timbre differentiation.",
+    "Add repeatable on-device APK acoustic regression checklist."
+  ]
+}

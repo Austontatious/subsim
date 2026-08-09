@@ -1,0 +1,9 @@
+{
+  "name": "baseline-case",
+  "input": {
+    "prompt_name": "evals/baseline_case"
+  },
+  "expected": {
+    "result": "pending_runtime_integration"
+  }
+}

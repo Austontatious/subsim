@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-05-07T14:36:23Z",
+  "contract_version": "subsim-rp1-eval-contract.v1",
+  "status": "ready_for_campaign_001_implementation",
+  "promotion_decision": "hold",
+  "decision_reason": "Preflight has before metrics and a working evaluation loop, but no SubSim after patch exists yet.",
+  "scope": {
+    "subsim_repo": "/mnt/data/subsim",
+    "readyplayer1_repo": "/mnt/data/ReadyPlayer1",
+    "subsim_commit": "5f12fe898965bf9758731e5036f24cc7af588b2b",
+    "readyplayer1_commit": "e8d5ee9252a532b9f8f49cac64a77e01782f0b10",
+    "worktree_note": "Both worktrees were dirty before this preflight; commit fields record HEAD only."
+  },
+  "required_fields": {
+    "scenario_id": "documented_and_emitted_in_suite_summary",
+    "seed": "documented_and_emitted_in_suite_summary",
+    "subsim_commit": "documented_in_contract_status",
+    "readyplayer1_commit": "documented_in_contract_status",
+    "evaluator_lane": "documented_as_policy_id",
+    "metrics_emitted": "emitted_in_report_json_and_suite_summary",
+    "replay_artifact_path": "emitted_per_scenario",
+    "failure_taxonomy_output": "emitted_in_report_json_and_suite_summary",
+    "promotion_rejection_decision": "documented_in_campaign_reports"
+  },
+  "lanes": {
+    "random_or_baseline": {
+      "status": "implemented",
+      "lane_id": "baseline",
+      "validation_artifact": "/mnt/data/ReadyPlayer1/reports/campaign_001_runs/20260507T143139Z-subsim_suite-bf7d4f/suite_summary.json"
+    },
+    "scripted_tactical_baseline": {
+      "status": "implemented",
+      "lane_id": "belief_baseline",
+      "validation_artifact": "/mnt/data/ReadyPlayer1/reports/campaign_001_runs/20260507T143115Z-subsim_suite-677aa9/suite_summary.json"
+    },
+    "belief_state": {
+      "status": "implemented",
+      "lane_id": "belief_baseline_contact_binding_v2",
+      "validation_artifact": "/mnt/data/ReadyPlayer1/reports/campaign_001_runs/20260507T143139Z-subsim_suite-d47f7f/suite_summary.json"
+    },
+    "learned_or_shadow": {
+      "status": "shadow_only_for_campaign_gate",
+      "lane_ids": [
+        "sequence_stub",
+        "sequence_model",
+        "qwen_structured",
+        "rssm_v2"
+      ],
+      "validation_artifact": "/mnt/data/ReadyPlayer1/reports/campaign_001_runs/20260507T143139Z-subsim_suite-bf7d4f/suite_summary.json",
+      "promotion_rule": "advisory_only; cannot be the only promotion signal"
+    }
+  },
+  "blocking_gaps": [],
+  "final_status": "READY_FOR_CAMPAIGN_001_IMPLEMENTATION"
+}

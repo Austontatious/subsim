@@ -1,0 +1,377 @@
+{
+  "report_version": "hydrophone_category_analysis.v1",
+  "generated_utc": "2026-04-24T00:36:08+00:00",
+  "sample_count": 434,
+  "source_count": 3,
+  "category_count": 5,
+  "cluster_count": 8,
+  "silhouette_score": 0.18953277324491113,
+  "pca_explained_variance_ratio": [
+    0.27749156533313724,
+    0.207789195220489
+  ],
+  "category_stats": {
+    "ambient_soundscape": {
+      "count": 54,
+      "source_counts": {
+        "hf_shipsear": 45,
+        "mbari_pacific_sound_2khz": 9
+      },
+      "label_quality_counts": {
+        "exact": 45,
+        "inferred": 9
+      },
+      "duration_median_s": 5.0,
+      "feature_means": {
+        "spectral_centroid_hz": 1570.899232273249,
+        "spectral_rolloff_hz": 3021.290951846508,
+        "spectral_flatness": 0.2813443377338074,
+        "dominant_freq_hz": 112.22222222222223,
+        "dominant_mod_hz": 1.9814814814814814,
+        "transient_density": 14.373148148148145,
+        "inter_event_interval_s": 0.06613252314814813,
+        "low_band_ratio": 0.39699996759494144,
+        "narrowband_index": 0.7186556622661926
+      },
+      "feature_medians": {
+        "spectral_centroid_hz": 1447.0426181020803,
+        "spectral_rolloff_hz": 2962.0202020202023,
+        "spectral_flatness": 0.2785969227552414,
+        "dominant_freq_hz": 55.0,
+        "dominant_mod_hz": 0.5,
+        "transient_density": 14.4,
+        "inter_event_interval_s": 0.06635937499999994,
+        "low_band_ratio": 0.27872382104396815,
+        "narrowband_index": 0.7214030772447586
+      }
+    },
+    "marine_mammal_orca": {
+      "count": 14,
+      "source_counts": {
+        "hf_wmms_parquet": 14
+      },
+      "label_quality_counts": {
+        "exact": 14
+      },
+      "duration_median_s": 1.1328005,
+      "feature_means": {
+        "spectral_centroid_hz": 5601.2288458612165,
+        "spectral_rolloff_hz": 9228.061522340577,
+        "spectral_flatness": 0.09636762625138671,
+        "dominant_freq_hz": 4357.583705357143,
+        "dominant_mod_hz": 1.2102371977333004,
+        "transient_density": 12.735537917113023,
+        "inter_event_interval_s": 0.0674552542948365,
+        "low_band_ratio": 0.006774937159402055,
+        "narrowband_index": 0.9036323737486133
+      },
+      "feature_medians": {
+        "spectral_centroid_hz": 6025.531500075947,
+        "spectral_rolloff_hz": 9233.17922077922,
+        "spectral_flatness": 0.06688941270112986,
+        "dominant_freq_hz": 3580.0,
+        "dominant_mod_hz": 1.000256416369018,
+        "transient_density": 12.495385111333935,
+        "inter_event_interval_s": 0.0663029296875,
+        "low_band_ratio": 0.00016045243501136783,
+        "narrowband_index": 0.9331105872988701
+      }
+    },
+    "marine_mammal_other": {
+      "count": 113,
+      "source_counts": {
+        "hf_wmms_parquet": 113
+      },
+      "label_quality_counts": {
+        "exact": 113
+      },
+      "duration_median_s": 1.417969,
+      "feature_means": {
+        "spectral_centroid_hz": 6141.013535043434,
+        "spectral_rolloff_hz": 10299.418827430765,
+        "spectral_flatness": 0.06720699563177415,
+        "dominant_freq_hz": 4485.143200359514,
+        "dominant_mod_hz": 2.1620059225173796,
+        "transient_density": 14.275843066073259,
+        "inter_event_interval_s": 0.06550650806952847,
+        "low_band_ratio": 0.22824726900071193,
+        "narrowband_index": 0.9327930043682259
+      },
+      "feature_medians": {
+        "spectral_centroid_hz": 5640.468013424624,
+        "spectral_rolloff_hz": 10586.73148777174,
+        "spectral_flatness": 0.0585503578186035,
+        "dominant_freq_hz": 330.0,
+        "dominant_mod_hz": 1.0,
+        "transient_density": 14.8099173553719,
+        "inter_event_interval_s": 0.0650625,
+        "low_band_ratio": 0.0706609264016151,
+        "narrowband_index": 0.9414496421813964
+      }
+    },
+    "marine_mammal_whale": {
+      "count": 73,
+      "source_counts": {
+        "hf_wmms_parquet": 73
+      },
+      "label_quality_counts": {
+        "exact": 73
+      },
+      "duration_median_s": 2.524414,
+      "feature_means": {
+        "spectral_centroid_hz": 2618.949506756017,
+        "spectral_rolloff_hz": 4457.37261625721,
+        "spectral_flatness": 0.06114532244838259,
+        "dominant_freq_hz": 1477.765678510274,
+        "dominant_mod_hz": 1.8525235615388511,
+        "transient_density": 12.084999584399416,
+        "inter_event_interval_s": 0.06676859138682406,
+        "low_band_ratio": 0.3231319872062931,
+        "narrowband_index": 0.9388546775516173
+      },
+      "feature_medians": {
+        "spectral_centroid_hz": 981.934186689352,
+        "spectral_rolloff_hz": 1686.2476145038167,
+        "spectral_flatness": 0.0383670441806316,
+        "dominant_freq_hz": 210.0,
+        "dominant_mod_hz": 0.704070407040704,
+        "transient_density": 13.0,
+        "inter_event_interval_s": 0.0654785478547854,
+        "low_band_ratio": 0.1409118771553039,
+        "narrowband_index": 0.9616329558193684
+      }
+    },
+    "surface_vessel": {
+      "count": 180,
+      "source_counts": {
+        "hf_shipsear": 180
+      },
+      "label_quality_counts": {
+        "coarse": 180
+      },
+      "duration_median_s": 5.0,
+      "feature_means": {
+        "spectral_centroid_hz": 1029.050419470089,
+        "spectral_rolloff_hz": 1940.9691358024695,
+        "spectral_flatness": 0.09911656540352848,
+        "dominant_freq_hz": 255.88888888888889,
+        "dominant_mod_hz": 5.591666666666667,
+        "transient_density": 14.614444444444445,
+        "inter_event_interval_s": 0.06510920138888888,
+        "low_band_ratio": 0.2988917372137722,
+        "narrowband_index": 0.9008834345964715
+      },
+      "feature_medians": {
+        "spectral_centroid_hz": 868.680078694752,
+        "spectral_rolloff_hz": 1595.7070707070707,
+        "spectral_flatness": 0.09015013650059694,
+        "dominant_freq_hz": 175.0,
+        "dominant_mod_hz": 2.5,
+        "transient_density": 14.8,
+        "inter_event_interval_s": 0.064546875,
+        "low_band_ratio": 0.2664736211299896,
+        "narrowband_index": 0.909849863499403
+      }
+    }
+  },
+  "category_overlap": {
+    "pairs": [
+      {
+        "category_a": "marine_mammal_orca",
+        "category_b": "marine_mammal_other",
+        "centroid_distance": 1.8274475934264578
+      },
+      {
+        "category_a": "marine_mammal_whale",
+        "category_b": "surface_vessel",
+        "centroid_distance": 2.1002764694534664
+      },
+      {
+        "category_a": "marine_mammal_other",
+        "category_b": "marine_mammal_whale",
+        "centroid_distance": 2.4557385325018264
+      },
+      {
+        "category_a": "marine_mammal_orca",
+        "category_b": "marine_mammal_whale",
+        "centroid_distance": 3.12770242076755
+      },
+      {
+        "category_a": "marine_mammal_other",
+        "category_b": "surface_vessel",
+        "centroid_distance": 3.1946878793551066
+      },
+      {
+        "category_a": "ambient_soundscape",
+        "category_b": "surface_vessel",
+        "centroid_distance": 3.292749990587658
+      },
+      {
+        "category_a": "marine_mammal_orca",
+        "category_b": "surface_vessel",
+        "centroid_distance": 3.901450114252325
+      },
+      {
+        "category_a": "ambient_soundscape",
+        "category_b": "marine_mammal_whale",
+        "centroid_distance": 4.042554628745314
+      },
+      {
+        "category_a": "ambient_soundscape",
+        "category_b": "marine_mammal_orca",
+        "centroid_distance": 4.1785668353288985
+      },
+      {
+        "category_a": "ambient_soundscape",
+        "category_b": "marine_mammal_other",
+        "centroid_distance": 4.236385439586494
+      }
+    ],
+    "nearest_centroid_confusion": {
+      "ambient_soundscape": {
+        "total": 54,
+        "correct": 46,
+        "nearest_centroid_misclass_rate": 0.14814814814814814,
+        "top_confusions": [
+          {
+            "predicted_category": "surface_vessel",
+            "count": 8
+          }
+        ]
+      },
+      "marine_mammal_orca": {
+        "total": 14,
+        "correct": 9,
+        "nearest_centroid_misclass_rate": 0.3571428571428571,
+        "top_confusions": [
+          {
+            "predicted_category": "marine_mammal_whale",
+            "count": 2
+          },
+          {
+            "predicted_category": "marine_mammal_other",
+            "count": 2
+          },
+          {
+            "predicted_category": "ambient_soundscape",
+            "count": 1
+          }
+        ]
+      },
+      "marine_mammal_other": {
+        "total": 113,
+        "correct": 54,
+        "nearest_centroid_misclass_rate": 0.5221238938053097,
+        "top_confusions": [
+          {
+            "predicted_category": "marine_mammal_orca",
+            "count": 22
+          },
+          {
+            "predicted_category": "surface_vessel",
+            "count": 19
+          },
+          {
+            "predicted_category": "marine_mammal_whale",
+            "count": 18
+          }
+        ]
+      },
+      "marine_mammal_whale": {
+        "total": 73,
+        "correct": 41,
+        "nearest_centroid_misclass_rate": 0.4383561643835616,
+        "top_confusions": [
+          {
+            "predicted_category": "marine_mammal_other",
+            "count": 11
+          },
+          {
+            "predicted_category": "surface_vessel",
+            "count": 11
+          },
+          {
+            "predicted_category": "marine_mammal_orca",
+            "count": 9
+          }
+        ]
+      },
+      "surface_vessel": {
+        "total": 180,
+        "correct": 139,
+        "nearest_centroid_misclass_rate": 0.22777777777777775,
+        "top_confusions": [
+          {
+            "predicted_category": "ambient_soundscape",
+            "count": 28
+          },
+          {
+            "predicted_category": "marine_mammal_whale",
+            "count": 13
+          }
+        ]
+      }
+    }
+  },
+  "safe_archetype_distribution": {
+    "intermittent_machinery_archetype": 180
+  },
+  "renderer_recommendations": {
+    "ambient_soundscape": {
+      "sample_count": 54,
+      "data_strength": "covered",
+      "suggested_render_mode": "texture_bed_synthesis_with_spectral_controls",
+      "parameter_hints": {
+        "spectral_flatness_hint": 0.281,
+        "centroid_hint_hz": 1570.9,
+        "modulation_hint_hz": 1.981
+      }
+    },
+    "marine_mammal_orca": {
+      "sample_count": 14,
+      "data_strength": "thin",
+      "suggested_render_mode": "hybrid_procedural_with_exemplar_grains",
+      "parameter_hints": {
+        "carrier_band_hint_hz": 3580.0,
+        "modulation_hint_hz": 1.0,
+        "cadence_hint_s": 0.066,
+        "tonality_hint": 0.933
+      }
+    },
+    "marine_mammal_other": {
+      "sample_count": 113,
+      "data_strength": "covered",
+      "suggested_render_mode": "hybrid_procedural_with_exemplar_grains",
+      "parameter_hints": {
+        "carrier_band_hint_hz": 330.0,
+        "modulation_hint_hz": 1.0,
+        "cadence_hint_s": 0.065,
+        "tonality_hint": 0.941
+      }
+    },
+    "marine_mammal_whale": {
+      "sample_count": 73,
+      "data_strength": "covered",
+      "suggested_render_mode": "hybrid_procedural_with_exemplar_grains",
+      "parameter_hints": {
+        "carrier_band_hint_hz": 210.0,
+        "modulation_hint_hz": 0.704,
+        "cadence_hint_s": 0.065,
+        "tonality_hint": 0.962
+      }
+    },
+    "surface_vessel": {
+      "sample_count": 180,
+      "data_strength": "covered",
+      "suggested_render_mode": "parametric_machinery_and_cavitation_layers",
+      "parameter_hints": {
+        "low_band_ratio_hint": 0.299,
+        "roughness_hint": 0.0,
+        "transient_density_hint": 14.614
+      }
+    }
+  },
+  "exemplars_path": "/mnt/data/subsim/dataset/hydrophone/analysis/hydrophone_category_exemplars.json",
+  "clusters_path": "/mnt/data/subsim/dataset/hydrophone/analysis/hydrophone_clusters.csv",
+  "safety_note": "Contact-like archetypes are abstract acoustic buckets only, not real-world military signature identification classes."
+}

@@ -1,0 +1,98 @@
+{
+  "report_version": "renderer_preview_report.v1",
+  "generated_utc": "2026-04-24T01:41:21+00:00",
+  "renderer_params_version": "renderer_params_v1",
+  "preview_manifest_path": "/mnt/data/subsim/artifacts/renderer_v1_previews/audio",
+  "families_assessed": [
+    {
+      "family": "ambient_soundscape",
+      "synthesis_mode": "ambient_bed",
+      "analysis_sample_count": 54,
+      "preview_count": 4,
+      "integration_readiness": "plausible_for_first_integration",
+      "acoustic_contract_hook": "foundation.ambient",
+      "common_risks": [
+        "Weather/geophony texture coverage is currently thin and may sound overly stationary."
+      ],
+      "next_steps": [
+        "Add weather layers (rain/storm impulse textures) and low-frequency swell controls.",
+        "Add dynamic depth/occlusion hooks for scenario-driven ambient changes."
+      ]
+    },
+    {
+      "family": "marine_mammal_whale",
+      "synthesis_mode": "hybrid",
+      "analysis_sample_count": 73,
+      "preview_count": 4,
+      "integration_readiness": "plausible_for_first_integration",
+      "acoustic_contract_hook": "contacts.biologic_large",
+      "common_risks": [
+        "Biologic phrase realism still depends on richer phrase-level envelopes and optional exemplar curation."
+      ],
+      "next_steps": [
+        "Expand phrase templates (upsweeps/downsweeps) and inter-phrase spacing variation.",
+        "Curate 3-6 high-quality exemplar snippets for phrase-tail realism."
+      ]
+    },
+    {
+      "family": "marine_mammal_other",
+      "synthesis_mode": "hybrid",
+      "analysis_sample_count": 113,
+      "preview_count": 4,
+      "integration_readiness": "plausible_for_first_integration",
+      "acoustic_contract_hook": "contacts.biologic_other",
+      "common_risks": [
+        "Biologic phrase realism still depends on richer phrase-level envelopes and optional exemplar curation."
+      ],
+      "next_steps": [
+        "Add richer click-train grammars (burst packetization and chirp arcs).",
+        "Differentiate dolphin-like vs seal-like textures through modulation presets."
+      ]
+    },
+    {
+      "family": "surface_vessel",
+      "synthesis_mode": "hybrid",
+      "analysis_sample_count": 180,
+      "preview_count": 4,
+      "integration_readiness": "plausible_for_first_integration",
+      "acoustic_contract_hook": "contacts.surface_vessel",
+      "common_risks": [
+        "Can become rhythmically repetitive without wider timing perturbations."
+      ],
+      "next_steps": [
+        "Add explicit cavitation state controls tied to speed/load abstractions.",
+        "Blend low-engine harmonics with sparse mechanical transients for class variation."
+      ]
+    },
+    {
+      "family": "intermittent_machinery_archetype",
+      "synthesis_mode": "procedural",
+      "analysis_sample_count": 180,
+      "preview_count": 4,
+      "integration_readiness": "plausible_for_first_integration",
+      "acoustic_contract_hook": "contacts.unknown_contact_like",
+      "common_risks": [
+        "Can become rhythmically repetitive without wider timing perturbations."
+      ],
+      "next_steps": [
+        "Increase ambiguity controls (event sparsity, narrowband drift, transient smear).",
+        "Keep labels abstract (quiet/noisy/unknown contact-like) and avoid real platform mapping."
+      ]
+    }
+  ],
+  "known_missing_categories": [
+    "marine_life_other",
+    "weather_geophony",
+    "anthropogenic_non_vessel",
+    "submarine_like_archetype_inspiration"
+  ],
+  "overall_recommendations": [
+    "Integrate ambient, whale, marine_mammal_other, and surface_vessel as first playable hybrid families.",
+    "Keep intermittent machinery archetype as ambiguous contact-like clutter, not platform-specific signature rendering.",
+    "Prioritize second-wave source pulls for weather_geophony and anthropogenic_non_vessel to enrich world-bed diversity."
+  ],
+  "validation_scope": {
+    "structural": "Preview generation and manifest/report consistency are validated automatically.",
+    "subjective": "Perceptual quality remains listening-based and should be reviewed by design/audio iteration."
+  }
+}

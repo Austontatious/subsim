@@ -75,6 +75,11 @@ def _synth_asset(name: str) -> array:
     meta = ASSET_NAMES[name]
     freq = meta["freq"]
     duration = meta["duration"]
+    if name == "ambient":
+        # Broadband low-frequency bed used as foundational substrate.
+        base = _motor(freq, duration, wobble=0.08)
+        noise = _low_pass(_noise(duration), 180.0)
+        return array("f", (0.55 * b + 0.45 * n for b, n in zip(base, noise)))
     if name in {"player_hum", "merchant", "hunter"}:
         return _motor(freq, duration)
     if name == "ping":

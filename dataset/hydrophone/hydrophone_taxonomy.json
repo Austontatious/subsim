@@ -1,0 +1,35 @@
+{
+  "taxonomy_version": "subsim_hydrophone_taxonomy.v1",
+  "description": "Cross-dataset category map for renderer-oriented Subsim hydrophone analysis.",
+  "top_level_categories": [
+    "marine_mammal_whale",
+    "marine_mammal_orca",
+    "marine_mammal_other",
+    "marine_life_other",
+    "surface_vessel",
+    "ambient_soundscape",
+    "weather_geophony",
+    "anthropogenic_non_vessel",
+    "machinery_noise",
+    "unknown_contact_like",
+    "submarine_like_archetype_inspiration"
+  ],
+  "label_quality_levels": [
+    "exact",
+    "coarse",
+    "inferred",
+    "unknown"
+  ],
+  "safe_contact_archetypes": [
+    "quiet_contact_archetype",
+    "intermittent_machinery_archetype",
+    "low_observable_contact_like",
+    "noisy_contact_like",
+    "unknown_quiet_contact"
+  ],
+  "mapping_notes": {
+    "hf_wmms_parquet": "Species labels are treated as direct marine mammal labels.",
+    "hf_shipsear": "Class index is mapped coarsely: classes 0-3 as surface vessel noise, class 4 as environmental noise.",
+    "mbari_pacific_sound_2khz": "No explicit per-clip labels in v1 pull; mapped as inferred ambient soundscape with possible mixed contributors."
+  }
+}

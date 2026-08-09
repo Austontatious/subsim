@@ -85,7 +85,7 @@ class TwoDialInput:
             self._help_latch = True
         elif symbol in (key.ESCAPE,):
             self._pause_latch = True
-        elif symbol in (key.Q,):
+        elif symbol in (key.X,):
             self._quit_flag = True
 
     def collect(self) -> InputFrame:

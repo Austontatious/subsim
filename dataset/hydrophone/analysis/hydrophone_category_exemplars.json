@@ -1,0 +1,40 @@
+{
+  "generated_utc": "2026-04-24T00:36:08+00:00",
+  "categories": {
+    "ambient_soundscape": {
+      "count": 54,
+      "representative_sample_id": "hf_shipsear_058fdf1c068b",
+      "representative_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_221_058fdf1c068b.wav",
+      "outlier_sample_id": "hf_shipsear_e7577e1efece",
+      "outlier_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_4/4_0_108_e7577e1efece.wav"
+    },
+    "marine_mammal_orca": {
+      "count": 14,
+      "representative_sample_id": "hf_wmms_parquet_81e63b1c03fa",
+      "representative_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/false_killer_whale/6102300j_81e63b1c03fa.wav",
+      "outlier_sample_id": "hf_wmms_parquet_70e6196ac6c7",
+      "outlier_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/killer_whale/92304008_70e6196ac6c7.wav"
+    },
+    "marine_mammal_other": {
+      "count": 113,
+      "representative_sample_id": "hf_wmms_parquet_447a6b9d5510",
+      "representative_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/atlantic_spotted_dolphin/6102603i_447a6b9d5510.wav",
+      "outlier_sample_id": "hf_wmms_parquet_7bb21d6ae784",
+      "outlier_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/white_beaked_dolphin/5903700j_7bb21d6ae784.wav"
+    },
+    "marine_mammal_whale": {
+      "count": 73,
+      "representative_sample_id": "hf_wmms_parquet_fba5c95883a6",
+      "representative_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/long_finned_pilot_whale/77028015_fba5c95883a6.wav",
+      "outlier_sample_id": "hf_wmms_parquet_25437d74dcfc",
+      "outlier_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_wmms_parquet/humpback_whale/6304300n_25437d74dcfc.wav"
+    },
+    "surface_vessel": {
+      "count": 180,
+      "representative_sample_id": "hf_shipsear_ee3c5ac14002",
+      "representative_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_2/2_0_115_ee3c5ac14002.wav",
+      "outlier_sample_id": "hf_shipsear_804ea196b3f0",
+      "outlier_file_path": "/mnt/data/subsim/dataset/hydrophone/raw/hf_shipsear/class_3/3_0_155_804ea196b3f0.wav"
+    }
+  }
+}

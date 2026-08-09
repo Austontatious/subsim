@@ -5,8 +5,15 @@ import argparse
 import json
 import time
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any, Optional
 
+from .acoustic_contract import (
+    SCHEMA_VERSION as ACOUSTIC_SCHEMA_VERSION,
+    AcousticContactState,
+    AcousticFoundationState,
+    build_contact_state,
+    build_foundation_state,
+)
 from .audio import AudioEngine
 from .config import (
     AUDIO_MAX_DISTANCE_M,
@@ -42,6 +49,7 @@ from .events import (
 from .input import Action, InputFrame, TwoDialInput
 from .objectives import ObjectiveTracker
 from .render import Renderer
+from .runtime_acoustic import RuntimeHybridLayerV1, list_runtime_acoustic_presets
 from .scenario import DIFFICULTY, Scenario, generate_skirmish
 
 
@@ -164,6 +172,7 @@ class Game:
     agent: Optional[str] = None
     health_check: bool = False
     render: bool = True
+    acoustic_preset: str = "medium_clutter"
 
     def __post_init__(self) -> None:
         if self.agent and not self.render:
@@ -205,6 +214,27 @@ class Game:
         self._last_action = Action()
         self._objective_complete_emitted = False
         self._objective_fail_emitted = False
+        self._acoustic_foundation: AcousticFoundationState = build_foundation_state(
+            own_noise=0.0,
+            sensor_noise=0.0,
+            ping_active=False,
+        )
+        self._acoustic_contacts: list[AcousticContactState] = []
+        self._acoustic_runtime: dict[str, Any] = {}
+        self._runtime_layer_keys: set[str] = set()
+        self.runtime_hybrid = RuntimeHybridLayerV1(
+            preset_name=self.acoustic_preset,
+            runtime_seed=self.seed,
+        )
+        initial_runtime = self.runtime_hybrid.state_snapshot()
+        initial_runtime["desktop_runtime_active"] = bool(self.runtime_hybrid.enabled)
+        initial_runtime["foundation_profile"] = {
+            "ambient_gain": self._acoustic_foundation.ambient_level,
+            "self_noise_gain": self._acoustic_foundation.self_noise_level * 0.38,
+            "hum_gain": self._acoustic_foundation.player_hum_level,
+        }
+        initial_runtime["layer_gains"] = {}
+        self._acoustic_runtime = initial_runtime
 
         self._init_sim(seed=self.seed, contacts=None, sensor_noise=0.0, aggression=1.0)
 
@@ -264,10 +294,24 @@ class Game:
         self.mode = mode_cls()
         self._emit_mode_change(self.mode.name)
 
+    def _clear_acoustic_contacts(self) -> None:
+        for entry in self._acoustic_contacts:
+            self.audio.stop_loop(entry.contact_id)
+        self._acoustic_contacts = []
+
+    def _clear_runtime_layers(self) -> None:
+        for layer_key in self._runtime_layer_keys:
+            self.audio.stop_loop(layer_key)
+        self._runtime_layer_keys = set()
+
     def start_menu(self) -> None:
+        self._clear_acoustic_contacts()
+        self._clear_runtime_layers()
         self.set_mode("menu")
 
     def start_tutorial(self) -> None:
+        self._clear_acoustic_contacts()
+        self._clear_runtime_layers()
         preset = DIFFICULTY.get("easy", next(iter(DIFFICULTY.values())))
         scenario = generate_skirmish(self.seed, preset)
         self._scenario = scenario
@@ -304,6 +348,8 @@ class Game:
         self._set_ui_message(msg, ttl=5.0)
 
     def start_skirmish(self, seed: Optional[int] = None) -> None:
+        self._clear_acoustic_contacts()
+        self._clear_runtime_layers()
         seed = self.seed if seed is None else seed
         preset = DIFFICULTY.get(self.difficulty, DIFFICULTY["normal"])
         scenario = generate_skirmish(seed, preset)
@@ -330,6 +376,8 @@ class Game:
             self._agent.reset(self.build_observation())
 
     def start_debrief(self, outcome: str) -> None:
+        self._clear_acoustic_contacts()
+        self._clear_runtime_layers()
         branch = self._objective.branch if self._objective else "engage"
         self._debrief = DebriefReport(outcome=outcome, stats=self._stats, objective_branch=branch)
         self.set_mode("debrief")
@@ -450,11 +498,39 @@ class Game:
                 self._stats.time_to_classify = self.world.time
 
     def _update_audio_mix(self) -> None:
+        foundation = build_foundation_state(
+            own_noise=self.world.player.own_noise,
+            sensor_noise=self.sensors.sensor_noise,
+            ping_active=self.sensor_tick.ping_emitted,
+        )
+        self._acoustic_foundation = foundation
+        foundation_profile: dict[str, float] | None = None
+        if self.runtime_hybrid and self.runtime_hybrid.enabled:
+            foundation_profile = self.runtime_hybrid.apply_foundation_profile(foundation)
+        self.audio.update_foundation(foundation, profile_overrides=foundation_profile)
+
+        previous_contact_ids = {entry.contact_id for entry in self._acoustic_contacts}
         passive = self.sensor_tick.passive_tracks
+        active_contact_ids = {ret.contact_id for ret in self.sensor_tick.ping_returns}
+        current_contact_ids: set[str] = set()
+        acoustic_contacts: list[AcousticContactState] = []
         for track in passive:
             contact = self.contacts.contacts[track.contact_id]
+            current_contact_ids.add(track.contact_id)
+            acoustic = build_contact_state(
+                contact_id=track.contact_id,
+                kind=contact.kind,
+                bearing_deg=track.azimuth_deg,
+                distance_m=track.distance_m,
+                confidence=track.confidence,
+                gain=track.gain,
+                occlusion_layers=track.occlusion_layers,
+                own_noise=self.world.player.own_noise,
+                source_channels=("passive", "active_ping") if track.contact_id in active_contact_ids else ("passive",),
+            )
+            acoustic_contacts.append(acoustic)
             asset = CONTACT_AUDIO.get(contact.kind, "merchant")
-            self.audio.play_loop(asset, track.contact_id)
+            self.audio.play_loop(asset, track.contact_id, variant=acoustic.variant)
             self.audio.set_contact_mix(
                 track.contact_id,
                 azimuth_deg=track.azimuth_deg,
@@ -463,6 +539,44 @@ class Game:
                 occlusion_layers=track.occlusion_layers,
                 own_noise=self.world.player.own_noise,
             )
+
+        for stale_contact_id in previous_contact_ids - current_contact_ids:
+            self.audio.stop_loop(stale_contact_id)
+        self._acoustic_contacts = acoustic_contacts
+
+        runtime_layer_gains: dict[str, float] = {}
+        if self.runtime_hybrid and self.runtime_hybrid.enabled:
+            runtime_layer_gains = self.runtime_hybrid.compute_layer_gains(
+                foundation,
+                contact_count=len(acoustic_contacts),
+                active_ping_count=len(self.sensor_tick.ping_returns),
+            )
+            active_runtime_layer_keys: set[str] = set()
+            for layer_key, spec in self.runtime_hybrid.layer_specs.items():
+                wav_path = str(spec.get("wav_path") or "")
+                if not wav_path:
+                    continue
+                active_runtime_layer_keys.add(layer_key)
+                self.audio.play_external_loop(wav_path, layer_key)
+                self.audio.set_runtime_layer_mix(layer_key, runtime_layer_gains.get(layer_key, 0.0))
+            for stale_layer_key in self._runtime_layer_keys - active_runtime_layer_keys:
+                self.audio.stop_loop(stale_layer_key)
+            self._runtime_layer_keys = active_runtime_layer_keys
+        else:
+            self._clear_runtime_layers()
+
+        runtime_state = self.runtime_hybrid.state_snapshot()
+        runtime_state["desktop_runtime_active"] = bool(self.runtime_hybrid.enabled)
+        runtime_state["foundation_profile"] = dict(
+            foundation_profile
+            or {
+                "ambient_gain": foundation.ambient_level,
+                "self_noise_gain": foundation.self_noise_level * 0.38,
+                "hum_gain": foundation.player_hum_level,
+            }
+        )
+        runtime_state["layer_gains"] = dict(runtime_layer_gains)
+        self._acoustic_runtime = runtime_state
 
     def _update_contact_selection(self, frame: InputFrame) -> None:
         tracks = list(self.sensor_tick.passive_tracks)
@@ -706,8 +820,11 @@ class Game:
                         "distance": track.distance_m,
                         "confidence": track.confidence,
                         "classify": self._objective.classification_for(track.contact_id) if self._objective else 0.0,
+                        "gain": track.gain,
+                        "occlusion_layers": track.occlusion_layers,
                     }
                 )
+        acoustic_contacts = [entry.to_dict() for entry in self._acoustic_contacts]
         return {
             "t": self.world.time,
             "player": {
@@ -724,6 +841,65 @@ class Game:
             },
             "ping_cooldown": self._ping_cooldown,
             "torpedo_state": self._torpedo_state,
+            "fire_control": self.build_fire_control_observation(),
+            "acoustic": {
+                "schema_version": ACOUSTIC_SCHEMA_VERSION,
+                "foundation": self._acoustic_foundation.to_dict(),
+                "contacts": acoustic_contacts,
+                "runtime_renderer": dict(self._acoustic_runtime),
+            },
+        }
+
+    def build_fire_control_observation(self) -> dict[str, Any]:
+        now = float(self.world.time)
+        active = bool(self._fire_control.active)
+        post_shot_cooldown = bool(self._torpedo_state_timer > 0.0 or self._torpedo_state == "fired")
+        fire_control_ready = (
+            active
+            and now >= float(self._fire_control.ready_time)
+            and now <= float(self._fire_control.window_end)
+        )
+        if active and now < float(self._fire_control.ready_time):
+            solution_state = "building_solution"
+            hold_reason = "building_solution"
+        elif fire_control_ready:
+            solution_state = "ready"
+            hold_reason = "ready"
+        elif active:
+            solution_state = "expired"
+            hold_reason = "solution_window_expired"
+        elif post_shot_cooldown:
+            solution_state = "fired"
+            hold_reason = "post_shot_cooldown"
+        else:
+            solution_state = "no_solution"
+            hold_reason = "no_solution"
+
+        solution_start = None
+        target_solution_age = None
+        time_to_ready = None
+        window_remaining = None
+        if active:
+            solution_start = float(self._fire_control.ready_time) - float(FIRE_SOLUTION_READY_S)
+            target_solution_age = max(0.0, now - solution_start)
+            time_to_ready = max(0.0, float(self._fire_control.ready_time) - now)
+            window_remaining = max(0.0, float(self._fire_control.window_end) - now)
+
+        weapon_ready = not post_shot_cooldown
+        active_torpedo_count = len(getattr(self.weapons, "torpedoes", []) or [])
+        return {
+            "schema_version": "subsim.fire_control.v1",
+            "fire_control_ready": bool(fire_control_ready),
+            "fire_control_solution_state": solution_state,
+            "fire_control_solution_quality": float(self._fire_control.quality) if active else 0.0,
+            "weapon_ready": bool(weapon_ready),
+            "valid_fire_opportunity": bool(fire_control_ready and weapon_ready),
+            "fire_control_hold_reason": hold_reason,
+            "target_id": self._fire_control.target_id if active else None,
+            "target_solution_age_s": target_solution_age,
+            "time_to_ready_s": time_to_ready,
+            "solution_window_remaining_s": window_remaining,
+            "active_torpedo_count": active_torpedo_count,
         }
 
     def _update_torpedo_state(self, dt: float) -> None:
@@ -892,6 +1068,7 @@ class Game:
                 "branch": self._objective.branch if self._objective else "",
             },
             "contacts": contacts,
+            "fire_control": self.build_fire_control_observation(),
             "events": events_to_trace(events),
         }
         self.trace.append(record)
@@ -947,6 +1124,7 @@ class Game:
 
 def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="SubSim prototype")
+    preset_names = list_runtime_acoustic_presets()
     parser.add_argument("--headless", action="store_true", help="run without window or audio")
     parser.add_argument("--render", action="store_true", help="force rendering even with agent")
     parser.add_argument("--seed", type=int, default=0, help="random seed")
@@ -967,11 +1145,28 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
         help="headless soak run in minutes (default 30)",
     )
     parser.add_argument("--health-check", action="store_true", help="assert finite sim state")
+    parser.add_argument(
+        "--acoustic-preset",
+        type=str,
+        default="medium_clutter",
+        choices=preset_names or None,
+        help="runtime acoustic preset pack selection",
+    )
+    parser.add_argument(
+        "--list-acoustic-presets",
+        action="store_true",
+        help="print runtime acoustic preset names and exit",
+    )
     return parser.parse_args(argv)
 
 
 def main(argv: Optional[list[str]] = None) -> None:
     args = parse_args(argv)
+    if args.list_acoustic_presets:
+        for preset_name in list_runtime_acoustic_presets():
+            print(preset_name)
+        return
+
     mode_override = args.mode or args.scenario
     duration = args.duration
     if args.headless and duration is None and args.ticks is None and not args.trace:
@@ -1002,6 +1197,7 @@ def main(argv: Optional[list[str]] = None) -> None:
         agent=agent,
         health_check=args.health_check or bool(args.soak),
         render=args.render,
+        acoustic_preset=args.acoustic_preset,
     )
 
     if ticks is not None:

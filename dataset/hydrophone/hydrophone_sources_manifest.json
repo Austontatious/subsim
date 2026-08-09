@@ -1,0 +1,137 @@
+{
+  "manifest_version": "hydrophone_sources_manifest.v1",
+  "created_utc": "2026-04-24T00:00:00Z",
+  "notes": "Subset-first source registry for Subsim hydrophone category analysis. Pulls are intentionally size-bounded.",
+  "sources": [
+    {
+      "source_id": "hf_wmms_parquet",
+      "name": "Watkins Marine Mammal Sound (WMMS) parquet mirror",
+      "provider": "Hugging Face",
+      "repository": "qdskipper/wmms-parquet",
+      "homepage_url": "https://huggingface.co/datasets/qdskipper/wmms-parquet",
+      "license": "personal_or_academic_noncommercial",
+      "usage_notes": "Dataset card states personal/academic non-commercial use; keep this substrate for analysis/prototyping and verify rights before distribution.",
+      "category_coverage": [
+        "marine_mammal_whale",
+        "marine_mammal_orca",
+        "marine_mammal_other"
+      ],
+      "pull_mode": "subset_pull",
+      "adapter": "hf_parquet_audio_bytes",
+      "enabled": true,
+      "config": {
+        "parquet_files": [
+          "data/test-00000-of-00001.parquet"
+        ],
+        "max_rows": 200,
+        "shuffle_seed": 17,
+        "region": "global_mixed"
+      }
+    },
+    {
+      "source_id": "hf_shipsear",
+      "name": "ShipsEar underwater ship-radiated noise",
+      "provider": "Hugging Face",
+      "repository": "peng7554/DS3500",
+      "homepage_url": "https://huggingface.co/datasets/peng7554/DS3500",
+      "license": "cc-by-4.0",
+      "usage_notes": "Using ShipsEar component only (real ship-radiated + environmental noise). DS3500 synthetic deep-sea augmentation is intentionally skipped in v1 pull.",
+      "category_coverage": [
+        "surface_vessel",
+        "ambient_soundscape",
+        "machinery_noise"
+      ],
+      "pull_mode": "subset_pull",
+      "adapter": "hf_zip_class_dirs",
+      "enabled": true,
+      "config": {
+        "zip_url": "https://huggingface.co/datasets/peng7554/DS3500/resolve/main/ShipsEar.zip",
+        "archive_root_prefix": "shipsear_5s_16k/",
+        "class_label_map": {
+          "0": "ship_class_a",
+          "1": "ship_class_b",
+          "2": "ship_class_c",
+          "3": "ship_class_d",
+          "4": "environmental_noise"
+        },
+        "max_per_class": 45,
+        "shuffle_seed": 23,
+        "region": "atlantic_coast_spain"
+      }
+    },
+    {
+      "source_id": "mbari_pacific_sound_2khz",
+      "name": "MBARI Pacific Sound 2kHz hydrophone archive",
+      "provider": "MBARI + AWS Open Data",
+      "homepage_url": "https://docs.mbari.org/pacific-sound/",
+      "license": "project_license_see_source",
+      "usage_notes": "Decimated daily 2kHz hydrophone files are very large. v1 pull uses small range-based clips for representative ambient/soundscape analysis.",
+      "category_coverage": [
+        "ambient_soundscape",
+        "weather_geophony",
+        "anthropogenic_non_vessel",
+        "unknown_contact_like"
+      ],
+      "pull_mode": "subset_pull",
+      "adapter": "http_wav_range_extract",
+      "enabled": true,
+      "config": {
+        "bucket": "pacific-sound-2khz",
+        "keys": [
+          "2020/01/MARS-20200101T000000Z-2kHz.wav",
+          "2020/06/MARS-20200615T000000Z-2kHz.wav",
+          "2021/09/MARS-20210921T000000Z-2kHz.wav"
+        ],
+        "range_bytes": 4200000,
+        "clip_seconds": 120,
+        "clips_per_file": 3,
+        "region": "monterey_bay_slope"
+      }
+    },
+    {
+      "source_id": "dclde_reference",
+      "name": "DCLDE workshop challenge datasets",
+      "provider": "DCLDE",
+      "homepage_url": "https://www.dclde.org/",
+      "license": "varies_by_challenge",
+      "usage_notes": "Retained as metadata-only in v1 because packaging/access conditions vary by year and challenge.",
+      "category_coverage": [
+        "marine_mammal_whale",
+        "marine_mammal_orca",
+        "marine_life_other"
+      ],
+      "pull_mode": "metadata_only",
+      "adapter": "metadata_only",
+      "enabled": true,
+      "config": {
+        "manual_steps": [
+          "Select specific DCLDE years/species aligned with Subsim goals.",
+          "Acquire downloads according to challenge-specific terms.",
+          "Register local paths into this manifest before re-run."
+        ]
+      }
+    },
+    {
+      "source_id": "noaa_passive_acoustics_reference",
+      "name": "NOAA passive acoustic archives",
+      "provider": "NOAA",
+      "homepage_url": "https://www.fisheries.noaa.gov/new-england-mid-atlantic/science-data/marine-mammal-acoustics",
+      "license": "varies_by_collection",
+      "usage_notes": "Included for future enrichment and metadata linkage; v1 keeps this as metadata-only to avoid stalling on heterogeneous archive packaging.",
+      "category_coverage": [
+        "marine_mammal_whale",
+        "ambient_soundscape",
+        "weather_geophony"
+      ],
+      "pull_mode": "metadata_only",
+      "adapter": "metadata_only",
+      "enabled": true,
+      "config": {
+        "manual_steps": [
+          "Identify concrete NOAA collection endpoints with stable machine access.",
+          "Define source-specific subset strategy for manageable pulls."
+        ]
+      }
+    }
+  ]
+}

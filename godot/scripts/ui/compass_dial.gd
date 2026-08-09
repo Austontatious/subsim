@@ -62,13 +62,13 @@ func gui_input(event: InputEvent) -> void:
         var st := event as InputEventScreenTouch
         if st.pressed:
             dragging = true
-            _apply_from_pos(st.position)
+            _apply_from_pos(_screen_to_local(st.position))
         else:
             dragging = false
     elif event is InputEventScreenDrag:
         var sd := event as InputEventScreenDrag
         if dragging:
-            _apply_from_pos(sd.position)
+            _apply_from_pos(_screen_to_local(sd.position))
 
 func _apply_from_pos(pos: Vector2) -> void:
     var c: Vector2 = size * 0.5
@@ -77,3 +77,8 @@ func _apply_from_pos(pos: Vector2) -> void:
     var deg: float = fposmod(rad_to_deg(ang) + 360.0, 360.0)
     target_heading = deg
     emit_signal("target_changed", target_heading)
+
+
+func _screen_to_local(screen_pos: Vector2) -> Vector2:
+    # Touch events report viewport coordinates; convert to this control's local space.
+    return get_global_transform_with_canvas().affine_inverse() * screen_pos

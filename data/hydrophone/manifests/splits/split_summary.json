@@ -1,0 +1,80 @@
+{
+  "class_counts_by_split": {
+    "ambient_ocean": {
+      "heldout_source_eval": 6,
+      "train": 25,
+      "validation": 9
+    },
+    "biologic_fish": {
+      "heldout_source_eval": 5,
+      "train": 10,
+      "validation": 3
+    },
+    "biologic_mammal": {
+      "heldout_source_eval": 2,
+      "train": 6,
+      "validation": 2
+    },
+    "surface_vessel": {
+      "heldout_source_eval": 2,
+      "train": 6,
+      "validation": 2
+    }
+  },
+  "dataset_counts_by_split": {
+    "mbari": {
+      "heldout_source_eval": 3,
+      "train": 18,
+      "validation": 6
+    },
+    "noaa_fish_sounds": {
+      "heldout_source_eval": 3,
+      "train": 4,
+      "validation": 3
+    },
+    "noaa_ocean_sounds": {
+      "heldout_source_eval": 3,
+      "train": 7,
+      "validation": 3
+    },
+    "shipsear": {
+      "heldout_source_eval": 2,
+      "train": 6,
+      "validation": 2
+    },
+    "watkins": {
+      "heldout_source_eval": 2,
+      "train": 6,
+      "validation": 2
+    },
+    "zenodo_pacama_fish": {
+      "heldout_source_eval": 2,
+      "train": 6,
+      "validation": 0
+    }
+  },
+  "degradation_notes": [],
+  "generated": "2026-05-07T16:26:28+00:00",
+  "group_leakage": [],
+  "group_leakage_prevented": true,
+  "include_synthetic": false,
+  "input_manifest": "/mnt/data/subsim/data/hydrophone/manifests/clips.jsonl",
+  "seed": 1337,
+  "split_clip_counts": {
+    "heldout_source_eval": 15,
+    "train": 47,
+    "validation": 16
+  },
+  "split_fracs": {
+    "heldout_source_eval": 0.2,
+    "train": 0.6,
+    "validation": 0.2
+  },
+  "split_group_counts": {
+    "heldout_source_eval": 9,
+    "train": 28,
+    "validation": 9
+  },
+  "total_clips": 78,
+  "total_groups": 46
+}

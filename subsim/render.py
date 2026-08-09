@@ -283,7 +283,7 @@ class Renderer:
             )
             labels.append(
                 pyglet.text.Label(
-                    "Esc to resume, Q to quit",
+                    "Esc to resume, X to quit",
                     font_name=font,
                     font_size=12,
                     x=w // 2,

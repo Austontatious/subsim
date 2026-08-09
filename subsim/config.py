@@ -52,7 +52,7 @@ KEYMAP = {
     "lock_contact": "ENTER",
     "help": "H",
     "pause": "ESC",
-    "quit": "Q",
+    "quit": "X",
 }
 
 
@@ -67,6 +67,7 @@ class Colors:
 HUD_FONT = "Courier"
 ASSET_VARIANTS = ("clean", "lp1", "lp2", "lp3")
 ASSET_NAMES = {
+    "ambient": {"freq": 52.0, "duration": 3.0},
     "player_hum": {"freq": 86.0, "duration": 2.5},
     "merchant": {"freq": 138.0, "duration": 2.5},
     "hunter": {"freq": 192.0, "duration": 2.5},

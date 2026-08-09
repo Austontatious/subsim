@@ -1,0 +1,138 @@
+{
+  "report_version": "hydrophone_dataset_gap_report.v1",
+  "generated_utc": "2026-04-24T00:36:08+00:00",
+  "total_indexed_samples": 434,
+  "category_gaps": {
+    "marine_mammal_whale": {
+      "primary_count": 73,
+      "inclusive_count": 87,
+      "coverage_status": "well_covered"
+    },
+    "marine_mammal_orca": {
+      "primary_count": 14,
+      "inclusive_count": 14,
+      "coverage_status": "thin"
+    },
+    "marine_mammal_other": {
+      "primary_count": 113,
+      "inclusive_count": 113,
+      "coverage_status": "well_covered"
+    },
+    "marine_life_other": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "surface_vessel": {
+      "primary_count": 180,
+      "inclusive_count": 180,
+      "coverage_status": "well_covered"
+    },
+    "ambient_soundscape": {
+      "primary_count": 54,
+      "inclusive_count": 54,
+      "coverage_status": "well_covered"
+    },
+    "weather_geophony": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "anthropogenic_non_vessel": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    },
+    "machinery_noise": {
+      "primary_count": 0,
+      "inclusive_count": 180,
+      "coverage_status": "well_covered"
+    },
+    "unknown_contact_like": {
+      "primary_count": 0,
+      "inclusive_count": 9,
+      "coverage_status": "thin"
+    },
+    "submarine_like_archetype_inspiration": {
+      "primary_count": 0,
+      "inclusive_count": 0,
+      "coverage_status": "missing"
+    }
+  },
+  "source_status": [
+    {
+      "source_id": "hf_wmms_parquet",
+      "name": "Watkins Marine Mammal Sound (WMMS) parquet mirror",
+      "adapter": "hf_parquet_audio_bytes",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 200,
+      "elapsed_s": 1.167,
+      "metadata_only": false
+    },
+    {
+      "source_id": "hf_shipsear",
+      "name": "ShipsEar underwater ship-radiated noise",
+      "adapter": "hf_zip_class_dirs",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 225,
+      "elapsed_s": 0.783,
+      "metadata_only": false
+    },
+    {
+      "source_id": "mbari_pacific_sound_2khz",
+      "name": "MBARI Pacific Sound 2kHz hydrophone archive",
+      "adapter": "http_wav_range_extract",
+      "pull_mode": "subset_pull",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 9,
+      "elapsed_s": 2.859,
+      "metadata_only": false
+    },
+    {
+      "source_id": "dclde_reference",
+      "name": "DCLDE workshop challenge datasets",
+      "adapter": "metadata_only",
+      "pull_mode": "metadata_only",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 0,
+      "elapsed_s": 0.0,
+      "metadata_only": true
+    },
+    {
+      "source_id": "noaa_passive_acoustics_reference",
+      "name": "NOAA passive acoustic archives",
+      "adapter": "metadata_only",
+      "pull_mode": "metadata_only",
+      "status": "ok",
+      "error": "",
+      "pulled_count": 0,
+      "elapsed_s": 0.0,
+      "metadata_only": true
+    }
+  ],
+  "metadata_only_sources": [
+    {
+      "source_id": "dclde_reference",
+      "name": "DCLDE workshop challenge datasets",
+      "manual_steps": [
+        "Select specific DCLDE years/species aligned with Subsim goals.",
+        "Acquire downloads according to challenge-specific terms.",
+        "Register local paths into this manifest before re-run."
+      ]
+    },
+    {
+      "source_id": "noaa_passive_acoustics_reference",
+      "name": "NOAA passive acoustic archives",
+      "manual_steps": [
+        "Identify concrete NOAA collection endpoints with stable machine access.",
+        "Define source-specific subset strategy for manageable pulls."
+      ]
+    }
+  ]
+}

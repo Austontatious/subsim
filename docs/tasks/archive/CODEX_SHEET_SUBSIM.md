@@ -1,3 +1,6 @@
+Status: completed
+Last updated: 2026-03-22
+
 # CODEX_SHEET_SUBSIM — Desktop Python SubSim (Ship + Agent Harness)
 
 ## 0) Purpose + Non-Negotiables

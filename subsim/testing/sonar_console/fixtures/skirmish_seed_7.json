@@ -1,0 +1,8 @@
+{
+  "name": "skirmish_seed_7_baseline",
+  "seed": 7,
+  "difficulty": "normal",
+  "ticks": 120,
+  "agent": "baseline",
+  "mode": "skirmish"
+}
